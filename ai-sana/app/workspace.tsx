@@ -164,6 +164,7 @@ export default function Workspace({
   const create = () => {
     void navigate("editor");
   };
+  const activeNav = view === "editor" ? "mine" : view === "detail" ? (active?.isOwner ? "mine" : "catalog") : view;
   return (
     <div className="app-shell">
       <a className="skip-link" href="#main">
@@ -195,11 +196,11 @@ export default function Workspace({
               <button
                 key={key}
                 className={
-                  view === key || (key === "mine" && view === "editor")
+                  activeNav === key
                     ? "active"
                     : ""
                 }
-                aria-current={view === key ? "page" : undefined}
+                aria-current={activeNav === key ? "page" : undefined}
                 onClick={() => navigate(key)}
               >
                 <Icon size={16} />
@@ -267,7 +268,6 @@ export default function Workspace({
               <>
                 <div className="page-heading">
                   <div>
-                    <p className="eyebrow">Кабинет бизнеса</p>
                     <h1>Мои задачи</h1>
                     <p>
                       От первого черновика до команды, готовой взяться за дело.
@@ -293,7 +293,7 @@ export default function Workspace({
               </>
             )}
             {view === "responses" && (
-              <MyResponses responses={responses} open={open} />
+              <MyResponses responses={responses} open={open} browse={() => navigate("catalog")} />
             )}
             {view === "editor" && (
               <Editor

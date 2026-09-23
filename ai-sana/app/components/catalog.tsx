@@ -7,13 +7,13 @@ import {
   Plus,
   SlidersHorizontal,
   FileText,
-  Check,
   Inbox,
   X,
-  Layers3,
+  ArrowDownWideNarrow,
 } from "lucide-react";
 import type { TaskRecord, TeamResponse } from "@/lib/types";
 import { qualityLevels } from "@/lib/quality";
+import { exampleTask } from "@/lib/example";
 
 export function Status({ status }: { status: TaskRecord["status"] }) {
   return (
@@ -95,6 +95,9 @@ export function TaskList({
               <span>/ 100</span>
             </div>
             <span className="score-caption">качество брифа</span>
+            <span className="task-score-bar" aria-hidden="true">
+              <span style={{ transform: `scaleX(${task.qualityScore / 100})` }} />
+            </span>
             <ArrowUpRight size={22} className="row-arrow" />
           </div>
         </button>
@@ -135,11 +138,8 @@ export function Catalog({
   );
   return (
     <>
-      <div className="page-heading">
+      <div className="page-heading catalog-heading">
         <div>
-          <p className="eyebrow">
-            <Layers3 size={15} /> Открытый выбор · реальные задачи
-          </p>
           <h1>Найдите свою задачу.</h1>
           <p>
             Выбирайте интересный проект и предлагайте решение своей командой.
@@ -151,6 +151,7 @@ export function Catalog({
       </div>
       <div className="catalog-layout">
         <section aria-label="Каталог задач">
+          {(tasks.length > 0 || loading) && <>
           <div className="catalog-tools">
             <label className="search-field">
               <Search size={19} />
@@ -158,7 +159,7 @@ export function Catalog({
               <input
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
-                placeholder="Поиск по задаче, компании или навыку"
+                placeholder="Задача, компания или навык"
               />
               {query && (
                 <button
@@ -202,29 +203,34 @@ export function Catalog({
           </div>
           <div className="list-caption">
             <span>Найдено: {filtered.length}</span>
-            <span>По качеству описания</span>
+            <span><ArrowDownWideNarrow size={16} /> По качеству описания</span>
           </div>
+          </>}
           {loading ? (
             <div className="loading-state" role="status">
               <span className="spinner" /> Загружаем каталог…
             </div>
           ) : filtered.length ? (
             <TaskList tasks={filtered} open={open} />
+          ) : !tasks.length ? (
+            <div className="catalog-empty">
+              <div className="catalog-empty-intro">
+                <h2>Первый проект начинается с вас</h2>
+                <p>Разместите задачу для бизнеса или посмотрите, как выглядит готовый бриф.</p>
+                <button className="primary" onClick={create}><Plus size={18} /> Создать задачу</button>
+              </div>
+              <button className="example-preview" onClick={() => open("example")}>
+                <span className="example-label"><FileText size={16} /> Учебный пример · не принимает отклики</span>
+                <h3>{exampleTask.title}</h3>
+                <p>{exampleTask.summary}</p>
+                <span className="example-preview-bottom"><span>Посмотреть готовый бриф</span><ArrowUpRight size={21} /></span>
+              </button>
+              <button className="text-button" onClick={retry}>Обновить каталог</button>
+            </div>
           ) : (
-            <Empty
-              title={
-                tasks.length
-                  ? "Таких задач пока нет"
-                  : "Здесь начнётся первый проект"
-              }
-            >
-              <p>
-                {tasks.length
-                  ? "Попробуйте другой запрос или сбросьте фильтры."
-                  : "Разместите бизнес-задачу — команды смогут предложить своё решение."}
-              </p>
+            <Empty title="Таких задач пока нет">
+              <p>Попробуйте другой запрос или сбросьте фильтры.</p>
               <div className="button-row">
-                {tasks.length ? (
                   <button
                     className="secondary"
                     onClick={() => {
@@ -235,11 +241,6 @@ export function Catalog({
                   >
                     Сбросить фильтры
                   </button>
-                ) : (
-                  <button className="secondary" onClick={() => open("example")}>
-                    <FileText size={16} /> Посмотреть пример
-                  </button>
-                )}
                 <button className="text-button" onClick={retry}>
                   Обновить каталог
                 </button>
@@ -249,23 +250,16 @@ export function Catalog({
         </section>
         <aside className="catalog-aside">
           <section className="business-note">
-            <span className="eyebrow">Для бизнеса</span>
-            <div className="brief-illustration" aria-hidden="true">
-              <div>
-                <span />
-                <span />
-                <span />
-                <b>
-                  <Check size={17} /> 100
-                </b>
-              </div>
-            </div>
             <h2>
               Хороший бриф
               <br />
               заметят первым.
             </h2>
             <p>Уточняйте задачу, получайте баллы и поднимайтесь в каталоге.</p>
+            <div className="rating-scale" aria-label="Рейтинг качества: от 0 до 100 баллов">
+              <div aria-hidden="true"><span /><span /><span /><span /></div>
+              <span>Первый набросок</span><strong>100 баллов</strong>
+            </div>
             <button onClick={create}>
               Создать карточку <ArrowRight size={18} />
             </button>
@@ -319,15 +313,16 @@ export function Catalog({
 export function MyResponses({
   responses,
   open,
+  browse,
 }: {
   responses: TeamResponse[];
   open: (id: string) => void;
+  browse: () => void;
 }) {
   return (
     <>
       <div className="page-heading">
         <div>
-          <p className="eyebrow">Кабинет команды</p>
           <h1>Мои отклики</h1>
           <p>Следите за решениями бизнеса по вашим предложениям.</p>
         </div>
@@ -338,6 +333,7 @@ export function MyResponses({
             Найдите интересную задачу в каталоге и расскажите, как ваша команда
             её решит.
           </p>
+          <button className="primary" onClick={browse}>Найти задачу <ArrowRight size={17} /></button>
         </Empty>
       ) : (
         <div className="application-list">

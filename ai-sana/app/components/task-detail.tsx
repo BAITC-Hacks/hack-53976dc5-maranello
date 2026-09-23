@@ -159,7 +159,7 @@ export function TaskDetail({
         <div>
           <div className="task-kicker">
             {task.organization || task.ownerName}
-            <Status status={task.status} />
+            {!isExample && <Status status={task.status} />}
           </div>
           <h1>{task.title || "Новая задача без названия"}</h1>
           <p>{task.summary || "Краткое описание пока не добавлено."}</p>
@@ -183,7 +183,6 @@ export function TaskDetail({
         <article className="detail-body">
           {sections.map(([number, label, value]) => (
             <section key={number}>
-              <span className="section-number">{number}</span>
               <div>
                 <h2>{label}</h2>
                 <p className={!value ? "not-filled" : ""}>

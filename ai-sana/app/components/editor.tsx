@@ -79,6 +79,10 @@ export function Editor({
     setStep(field?.step ?? 2);
     setTimeout(() => document.getElementById(`field-${key}`)?.focus(), 50);
   }
+  function goToStep(next: number) {
+    setStep(next);
+    requestAnimationFrame(() => document.getElementById("editor-steps")?.scrollIntoView({ block: "start" }));
+  }
   async function save(publish: boolean) {
     setError("");
     setNotice("");
@@ -194,7 +198,6 @@ export function Editor({
       </button>
       <div className="page-heading editor-heading">
         <div>
-          <p className="eyebrow">Кабинет бизнеса</p>
           <h1>
             {record ? "Доработайте свой бриф" : "От идеи — к понятной задаче"}
           </h1>
@@ -226,16 +229,20 @@ export function Editor({
       )}
       <div className="editor-layout">
         <div className="editor-main">
-          <nav className="stepper" aria-label="Этапы заполнения">
+          <div className="mobile-quality">
+            <span>Качество брифа <strong>{quality.score}<small> / 100</small></strong></span>
+            <a href="#quality-panel">Как улучшить <ArrowRight size={15} /></a>
+          </div>
+          <nav className="stepper" id="editor-steps" aria-label="Этапы заполнения">
             {steps.map((title, index) => (
               <button
                 key={title}
                 className={step === index ? "current" : ""}
                 aria-current={step === index ? "step" : undefined}
-                onClick={() => setStep(index)}
+                onClick={() => goToStep(index)}
               >
                 <span>{index + 1}</span>
-                <strong>{title}</strong>
+                <strong>{title}<small>{fieldDefinitions.filter((field) => field.step === index && form[field.key].trim()).length + (index === 2 && form.skills.length > 0 ? 1 : 0)} из {fieldDefinitions.filter((field) => field.step === index).length + (index === 2 ? 1 : 0)} полей</small></strong>
               </button>
             ))}
           </nav>
@@ -455,13 +462,13 @@ export function Editor({
             <div className="step-actions">
               <button
                 className="text-button"
-                onClick={() => setStep(Math.max(0, step - 1))}
+                onClick={() => goToStep(Math.max(0, step - 1))}
                 disabled={step === 0}
               >
                 <ArrowLeft size={16} /> Назад
               </button>
               {step < 2 ? (
-                <button className="secondary" onClick={() => setStep(step + 1)}>
+                <button className="secondary" onClick={() => goToStep(step + 1)}>
                   Далее <ArrowRight size={17} />
                 </button>
               ) : (
@@ -498,8 +505,8 @@ export function Editor({
             </button>
           </div>
         </div>
-        <aside className="quality-panel">
-          <p className="eyebrow">Ваш бриф становится лучше</p>
+        <aside className="quality-panel" id="quality-panel">
+          <h2 className="quality-title">Качество вашего брифа</h2>
           <div className="quality-number">
             <strong>{quality.score}</strong>
             <span>
