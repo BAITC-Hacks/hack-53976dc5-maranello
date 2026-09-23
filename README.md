@@ -10,7 +10,7 @@ Hackathon team repository for Maranello
 - [Инструкция по установке, архитектура, тесты и ограничения](ai-sana/README.md)
 - [Сценарий демонстрации](ai-sana/DEMO.md)
 - [Правила продукта](ai-sana/PRODUCT.md)
-- [Опубликованный сайт](https://ai-sana-practice.ramirr2006.chatgpt.site) — доступ пока только у владельца; для судей требуется настроить доступ.
+- [Опубликованный сайт](https://ai-sana-practice.ramirr2006.chatgpt.site) — открыт для просмотра по ссылке. Для создания задачи и отклика нужен вход через ChatGPT.
 
 ### Запуск
 
