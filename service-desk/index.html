@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Поток — заявки клиентов</title>
+  <meta name="description" content="Панель сервисной команды: заявки, ответственные и сроки ответа.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232c53da'/%3E%3Cpath d='M8 22V10h16v12M16 10v12' fill='none' stroke='white' stroke-width='3'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css"><script type="module" src="app.js"></script>
+</head>
+<body>
+  <a class="skip" href="#main">К заявкам</a>
+  <aside class="sidebar">
+    <a href="./" class="brand"><span class="brand-icon">п</span>поток<span class="brand-dot">.</span></a>
+    <p class="workspace">СЕРВИСНАЯ КОМАНДА</p>
+    <div class="nav-current"><span aria-hidden="true">▤</span> Заявки <span id="nav-count">0</span></div>
+    <div class="side-note"><span class="note-icon">↗</span><strong>Каждой заявке — ответ</strong><p>Сроки и ответственность в одном рабочем пространстве.</p></div>
+    <div class="profile"><span class="avatar">РК</span><div><strong>Руководитель</strong><small>Обзор команды</small></div></div>
+  </aside>
+  <main id="main">
+    <header class="topbar"><span>Рабочее пространство <span class="slash">/</span> Заявки</span><span id="today"></span></header>
+    <section class="heading"><div><p class="eyebrow">ОБРАЩЕНИЯ КЛИЕНТОВ</p><h1>Всё под контролем<span>.</span></h1><p class="subheading">Распределяйте работу и отвечайте вовремя.</p></div><div class="actions"><button id="export" class="button secondary">↓ Экспорт CSV</button><button id="import" class="button primary">↑ Импорт заявок</button></div></section>
+    <div id="notice" role="status" aria-live="polite" hidden></div>
+    <div class="stats" aria-label="Сводка по заявкам">
+      <div class="stat"><span>Активные</span><strong id="active-count">0</strong><small>Ждут решения</small></div>
+      <div class="stat overdue-stat"><span>Просроченные <span aria-hidden="true">↗</span></span><strong id="overdue-count">0</strong><small>Требуют внимания</small></div>
+      <div class="stat"><span>Новые</span><strong id="new-count">0</strong><small>Ещё не взяты в работу</small></div>
+      <div class="stat"><span>Решённые</span><strong id="done-count">0</strong><small>Обращения закрыты</small></div>
+    </div>
+    <section class="team-section"><div class="section-caption">ЗАГРУЗКА КОМАНДЫ <span>Активные заявки</span></div><div id="team" class="team"></div></section>
+    <section class="requests" aria-label="Список заявок">
+      <div class="list-top"><div class="tabs" role="group" aria-label="Показать заявки"><button data-view="all" aria-pressed="true">Все заявки</button><button data-view="active" aria-pressed="false">Активные</button><button data-view="overdue" aria-pressed="false">Просроченные</button></div><span id="result-count"></span></div>
+      <div class="filters"><label class="search"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="Найти по номеру или теме…" aria-label="Поиск заявок"></label><select id="manager-filter" aria-label="Фильтр по ответственному"><option value="">Все ответственные</option></select><select id="status-filter" aria-label="Фильтр по статусу"><option value="">Все статусы</option></select><button id="clear-filters" class="text-button">Сбросить</button></div>
+      <div class="table-scroll"><table><thead><tr><th>Обращение</th><th>Категория</th><th>Ответственный</th><th>Статус</th><th>Срок ответа <span aria-hidden="true">↑</span></th></tr></thead><tbody id="rows"></tbody></table></div>
+      <div id="empty" class="empty" hidden><strong>Заявок не найдено</strong><p>Измените фильтры или импортируйте CSV.</p></div>
+      <footer class="table-footer"><span>Сначала ближайшие сроки · закрытые в конце</span><span id="save-state">Сохранено в этом браузере</span></footer>
+    </section>
+    <footer class="page-footer"><span>Поток / Учебный прототип · обезличенные данные</span><a href="example.csv" download>Пример CSV · 50 заявок ↗</a></footer>
+  </main>
+  <dialog id="import-dialog" aria-labelledby="import-title"><form id="import-form"><div class="dialog-heading"><h2 id="import-title">Импорт заявок</h2><button type="button" id="close-import" class="icon-button" aria-label="Закрыть">×</button></div><p>Выберите CSV в UTF-8. Новые номера добавятся, существующие обновятся. Остальные заявки сохранятся.</p><label class="file-label" for="csv-file">Файл CSV</label><input id="csv-file" type="file" accept=".csv,text/csv" required><p class="help">Обязательные столбцы: дата, категория, ответственный, статус. Без срока ответа используем 18:00 следующего дня.</p><a href="example.csv" download>Скачать пример на 50 обращений</a><p id="import-error" role="alert"></p><div class="dialog-footer"><button type="button" id="cancel-import" class="button secondary">Отмена</button><button type="submit" class="button primary">Импортировать</button></div></form></dialog>
+</body></html>

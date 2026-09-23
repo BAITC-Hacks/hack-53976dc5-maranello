@@ -1,0 +1,14 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
+import {importCSV,exportCSV,parseCSV,mergeRecords,isOverdue,selectRecords} from './core.js';
+const text=await readFile(new URL('./example.csv',import.meta.url),'utf8');
+const rows=importCSV(text);
+test('all 50 records import and round-trip without loss',()=>{assert.equal(rows.length,50);assert.equal(new Set(rows.map(r=>r.id)).size,50);assert.deepEqual(importCSV(exportCSV(rows)),rows);});
+test('quoted commas, newlines, BOM and semicolons',()=>{assert.deepEqual(parseCSV('\uFEFFa;b\r\n"x;y";"a""b\nc"'),[['a','b'],['x;y','a"b\nc']]);assert.throws(()=>parseCSV('a,b\n"unclosed,b'));});
+test('deadline and closed status rules',()=>{const r={...rows[0],due:'2026-09-22T18:00',status:'В работе'};assert.equal(isOverdue(r,new Date('2026-09-23T12:00')),true);assert.equal(isOverdue({...r,status:'Решена'},new Date('2026-09-23T12:00')),false);assert.equal(isOverdue({...r,status:'Отменена'},new Date('2026-09-23T12:00')),false);assert.equal(isOverdue(r,new Date(r.due)),false);});
+test('update import is idempotent and keeps unrelated records',()=>{const changed={...rows[0],status:'Решена',assignee:'Менеджер В'};const merged=mergeRecords(rows,[changed]);assert.equal(merged.length,50);assert.deepEqual(merged[0],changed);assert.deepEqual(merged[1],rows[1]);assert.deepEqual(mergeRecords(merged,[changed]),merged);});
+test('invalid status, invalid calendar date and duplicate ids fail atomically',()=>{assert.throws(()=>importCSV(text.replace('Новая','Ошибка')));assert.throws(()=>importCSV(text.replace('2026-09-15','2026-02-30')));assert.throws(()=>importCSV(exportCSV([rows[0],rows[0]])));});
+test('four required columns obtain title, id and next-day deadline',()=>{const [r]=importCSV('дата,категория,ответственный,статус\n2026-09-23,Ремонт,Менеджер А,Новая');assert.equal(r.due,'2026-09-24T18:00');assert.ok(r.id);assert.ok(r.title);});
+test('combined filters select active overdue work for a manager',()=>{const selected=selectRecords(rows,{view:'overdue',manager:'Менеджер А',search:'заявка'},new Date('2026-09-23T12:00'));assert.ok(selected.length);assert.ok(selected.every(r=>r.assignee==='Менеджер А'&&isOverdue(r,new Date('2026-09-23T12:00'))));});
+test('export neutralizes spreadsheet formulas',()=>{assert.match(exportCSV([{...rows[0],title:'=1+1'}]),/"'=1\+1"/);});
