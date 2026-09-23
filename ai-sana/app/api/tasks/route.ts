@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { getChatGPTUser } from "@/app/chatgpt-auth";
+import { getAppUser } from "@/lib/app-auth";
 import { apiError, HttpError, json, readBody, unauthorized } from "@/lib/api";
 import { createTask, listTasks, updateTask } from "@/lib/repository";
 import { taskData } from "@/lib/server-tasks";
@@ -7,7 +7,7 @@ import { taskPayloadSchema, validatePublication } from "@/lib/task-payload";
 
 export async function GET(request: Request) {
   try {
-    const viewer = await getChatGPTUser();
+    const viewer = await getAppUser();
     const mine = new URL(request.url).searchParams.get("mine") === "1";
     if (mine && !viewer) return unauthorized();
     const rows = await listTasks(mine ? viewer?.userId : undefined);
@@ -29,8 +29,9 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
-    const viewer = await getChatGPTUser();
+    const viewer = await getAppUser();
     if (!viewer) return unauthorized();
+    if (viewer.role === "student") return new Response(JSON.stringify({error:"Это действие доступно в аккаунте бизнеса."}),{status:403,headers:{"Content-Type":"application/json","Cache-Control":"no-store"}});
     const body = await readBody(request);
     const payload = taskPayloadSchema.parse(body);
     const id = z

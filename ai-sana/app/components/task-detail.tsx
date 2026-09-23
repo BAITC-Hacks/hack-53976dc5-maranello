@@ -18,6 +18,7 @@ export function TaskDetail({
   task,
   signedIn,
   signInHref,
+  canRespond = true,
   back,
   edit,
   refresh,
@@ -25,6 +26,7 @@ export function TaskDetail({
   task: TaskRecord;
   signedIn: boolean;
   signInHref: string;
+  canRespond?: boolean;
   back: () => void;
   edit: () => void;
   refresh: () => Promise<void>;
@@ -265,13 +267,13 @@ export function TaskDetail({
                         <h4>{response.teamName}</h4>
                         <p className="members">{response.teamMembers}</p>
                         <p>{response.proposal}</p>
-                        <a
+                        {response.studentEmail.endsWith("@demo.invalid") ? <p className="small-note">Тестовый аккаунт · контактная почта не используется.</p> : <a
                           className="contact-link"
                           href={`mailto:${response.studentEmail}`}
                         >
                           <Mail size={15} />
                           {response.studentEmail}
-                        </a>
+                        </a>}
                         {response.selected ? (
                           <strong className="selected-label">
                             <CheckCircle2 size={17} /> Команда выбрана
@@ -318,6 +320,8 @@ export function TaskDetail({
                 </>
               )}
             </>
+          ) : !canRespond ? (
+            <><h2>Отклики — от студентов</h2><p>Вы вошли как бизнес. Чтобы предложить решение этой задачи, смените аккаунт на студенческий.</p><a className="secondary full" href={signInHref}>Войти как студент</a></>
           ) : (
             <>
               <div className="panel-icon">

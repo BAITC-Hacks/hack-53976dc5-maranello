@@ -70,3 +70,16 @@ export const aiUsage = sqliteTable("ai_usage", {
   windowStart: integer("window_start").notNull(),
   count: integer("count").notNull().default(1),
 });
+
+export const appSessions = sqliteTable("app_sessions", {
+  tokenHash: text("token_hash").primaryKey(),
+  userId: text("user_id").notNull(),
+  credentialVersion: text("credential_version").notNull(),
+  expiresAt: integer("expires_at").notNull(),
+}, (table) => [index("idx_app_sessions_expiry").on(table.expiresAt)]);
+
+export const loginLimits = sqliteTable("login_limits", {
+  key: text("key").primaryKey(),
+  windowStart: integer("window_start").notNull(),
+  count: integer("count").notNull(),
+});

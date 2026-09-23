@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { getChatGPTUser } from "@/app/chatgpt-auth";
+import { getAppUser } from "@/lib/app-auth";
 import {
   apiError,
   forbidden,
@@ -17,7 +17,7 @@ type Context = { params: Promise<{ id: string }> };
 
 export async function GET(_request: Request, context: Context) {
   try {
-    const viewer = await getChatGPTUser();
+    const viewer = await getAppUser();
     const task = await findTask((await context.params).id);
     if (!task || (task.status === "draft" && task.ownerId !== viewer?.userId))
       return notFound();
@@ -32,7 +32,7 @@ export async function GET(_request: Request, context: Context) {
 
 export async function PATCH(request: Request, context: Context) {
   try {
-    const viewer = await getChatGPTUser();
+    const viewer = await getAppUser();
     if (!viewer) return unauthorized();
     const task = await findTask((await context.params).id);
     if (!task) return notFound();

@@ -1,6 +1,6 @@
 import { env } from "cloudflare:workers";
 import { z } from "zod";
-import { getChatGPTUser } from "@/app/chatgpt-auth";
+import { getAppUser } from "@/lib/app-auth";
 import { apiError, HttpError, json, readBody, unauthorized } from "@/lib/api";
 import { suggestBrief } from "@/lib/assistant";
 import { database } from "@/lib/repository";
@@ -10,8 +10,9 @@ export async function GET() {
 }
 export async function POST(request: Request) {
   try {
-    const viewer = await getChatGPTUser();
+    const viewer = await getAppUser();
     if (!viewer) return unauthorized();
+    if (viewer.role === "student") return new Response(JSON.stringify({error:"Это действие доступно в аккаунте бизнеса."}),{status:403,headers:{"Content-Type":"application/json","Cache-Control":"no-store"}});
     const body = await readBody(request);
     const description = z
       .string()

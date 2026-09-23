@@ -25,11 +25,9 @@ function routeUrl(view: View, id?: string) {
 export default function Workspace({
   user,
   signInHref,
-  signOutHref,
 }: {
-  user: { name: string; email: string } | null;
+  user: { name: string; email: string; role: "business" | "student" | "member" } | null;
   signInHref: string;
-  signOutHref: string;
 }) {
   const [view, setView] = useState<View>("catalog");
   const [catalog, setCatalog] = useState<TaskRecord[]>([]);
@@ -69,9 +67,11 @@ export default function Workspace({
           (next === "editor" || next === "mine" || next === "responses") &&
           !user
         ) {
-          location.assign(signInHref);
+          location.assign(`${signInHref}?returnTo=${encodeURIComponent(routeUrl(next,id))}`);
           return;
         }
+        if (user?.role === "student" && (next === "editor" || next === "mine")) throw new Error("Создание задач доступно в аккаунте бизнеса.");
+        if (user?.role === "business" && next === "responses") throw new Error("Отклики доступны в аккаунте студента.");
         if (next === "catalog") await loadCatalog();
         else if (next === "mine") {
           const data = await requestJson<{ tasks: TaskRecord[] }>(
@@ -191,7 +191,7 @@ export default function Workspace({
               { key: "responses", label: "Мои отклики", Icon: Send },
             ] as const
           )
-            .filter((item) => user || item.key === "catalog")
+            .filter((item) => item.key === "catalog" || (user && (item.key === "mine" ? user.role !== "student" : user.role !== "business")))
             .map(({ key, label, Icon }) => (
               <button
                 key={key}
@@ -217,17 +217,19 @@ export default function Workspace({
               <span className="account-name" title={user.email}>
                 {user.name}
               </span>
-              <a
-                href={signOutHref}
-                target="_top"
+              {user.role !== "member" && <a className="account-role" href="/login" aria-label="Сменить аккаунт" onClick={(e)=>{if(dirty.current && !window.confirm("Уйти без сохранения?"))e.preventDefault();}}>{user.role === "business" ? "Бизнес" : "Студент"}</a>}
+              <a className="account-switch" href="/login" onClick={(e)=>{if(dirty.current && !window.confirm("Уйти без сохранения?"))e.preventDefault();}}>Сменить аккаунт</a>
+              <button
+                className="icon-button"
                 aria-label="Выйти"
-                onClick={(e) => {
-                  if (dirty.current && !window.confirm("Уйти без сохранения?"))
-                    e.preventDefault();
+                onClick={async () => {
+                  if (dirty.current && !window.confirm("Уйти без сохранения?")) return;
+                  try { await requestJson("/api/auth/logout",{method:"POST",body:"{}"}); location.assign("/login"); }
+                  catch(cause) { setError((cause as Error).message); }
                 }}
               >
                 <LogOut size={17} />
-              </a>
+              </button>
             </>
           ) : (
             <a className="sign-in" href={signInHref} target="_top">
@@ -262,6 +264,7 @@ export default function Workspace({
                 create={create}
                 open={open}
                 retry={() => navigate("catalog")}
+                canCreate={user?.role !== "student"}
               />
             )}
             {view === "mine" && (
@@ -309,7 +312,8 @@ export default function Workspace({
                 key={active.id}
                 task={active}
                 signedIn={!!user}
-                signInHref={signInHref}
+                signInHref={`${signInHref}?returnTo=${encodeURIComponent(routeUrl("detail",active.id))}`}
+                canRespond={user?.role !== "business"}
                 back={() => navigate(active.isOwner ? "mine" : "catalog")}
                 edit={() => navigate("editor", active.id)}
                 refresh={refreshActive}

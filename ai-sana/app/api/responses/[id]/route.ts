@@ -1,10 +1,10 @@
-import { getChatGPTUser } from "@/app/chatgpt-auth";
+import { getAppUser } from "@/lib/app-auth";
 import { apiError, HttpError, json, readBody, unauthorized } from "@/lib/api";
 import { selectResponse } from "@/lib/repository";
 type Context = { params: Promise<{ id: string }> };
 export async function PATCH(request: Request, context: Context) {
   try {
-    const viewer = await getChatGPTUser();
+    const viewer = await getAppUser();
     if (!viewer) return unauthorized();
     await readBody(request);
     const { id } = await context.params;

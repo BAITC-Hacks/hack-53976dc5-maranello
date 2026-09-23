@@ -1,4 +1,4 @@
-import { getChatGPTUser } from "@/app/chatgpt-auth";
+import { getAppUser } from "@/lib/app-auth";
 import {
   apiError,
   forbidden,
@@ -14,7 +14,7 @@ type Context = { params: Promise<{ id: string }> };
 
 export async function GET(_request: Request, context: Context) {
   try {
-    const viewer = await getChatGPTUser();
+    const viewer = await getAppUser();
     if (!viewer) return unauthorized();
     const task = await findTask((await context.params).id);
     if (!task || (task.status === "draft" && task.ownerId !== viewer.userId))
@@ -33,8 +33,9 @@ export async function GET(_request: Request, context: Context) {
 
 export async function POST(request: Request, context: Context) {
   try {
-    const viewer = await getChatGPTUser();
+    const viewer = await getAppUser();
     if (!viewer) return unauthorized();
+    if (viewer.role === "business") return new Response(JSON.stringify({error:"Отправить предложение можно из аккаунта студента."}),{status:403,headers:{"Content-Type":"application/json","Cache-Control":"no-store"}});
     const task = await findTask((await context.params).id);
     if (!task || task.status === "draft") return notFound();
     if (task.ownerId === viewer.userId) return forbidden();

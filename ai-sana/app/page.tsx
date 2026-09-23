@@ -1,10 +1,10 @@
-import { chatGPTSignInPath, chatGPTSignOutPath, getChatGPTUser } from "./chatgpt-auth";
+import { getAppUser } from "@/lib/app-auth";
 import Workspace from "./workspace";
 
 export const dynamic = "force-dynamic";
 
 export default async function Home() {
-  const user = await getChatGPTUser();
-  return <Workspace user={user ? { name: user.displayName, email: user.email } : null}
-    signInHref={chatGPTSignInPath("/")} signOutHref={chatGPTSignOutPath("/")} />;
+  const user = await getAppUser();
+  return <Workspace user={user ? { name: user.displayName, email: user.email, role: user.role } : null}
+    signInHref="/login" />;
 }

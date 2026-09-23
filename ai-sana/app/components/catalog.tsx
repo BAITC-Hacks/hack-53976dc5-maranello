@@ -111,12 +111,14 @@ export function Catalog({
   create,
   open,
   retry,
+  canCreate = true,
 }: {
   tasks: TaskRecord[];
   loading: boolean;
   create: () => void;
   open: (id: string) => void;
   retry: () => void;
+  canCreate?: boolean;
 }) {
   const [query, setQuery] = useState("");
   const [status, setStatus] = useState("published");
@@ -145,9 +147,9 @@ export function Catalog({
             Выбирайте интересный проект и предлагайте решение своей командой.
           </p>
         </div>
-        <button className="primary" onClick={create}>
+        {canCreate && <button className="primary" onClick={create}>
           <Plus size={18} /> Разместить задачу
-        </button>
+        </button>}
       </div>
       <div className="catalog-layout">
         <section aria-label="Каталог задач">
@@ -216,8 +218,8 @@ export function Catalog({
             <div className="catalog-empty">
               <div className="catalog-empty-intro">
                 <h2>Первый проект начинается с вас</h2>
-                <p>Разместите задачу для бизнеса или посмотрите, как выглядит готовый бриф.</p>
-                <button className="primary" onClick={create}><Plus size={18} /> Создать задачу</button>
+                <p>{canCreate ? "Разместите задачу для бизнеса или посмотрите, как выглядит готовый бриф." : "Бизнес пока не опубликовал задачи. Посмотрите, как выглядит готовый бриф."}</p>
+                {canCreate && <button className="primary" onClick={create}><Plus size={18} /> Создать задачу</button>}
               </div>
               <button className="example-preview" onClick={() => open("example")}>
                 <span className="example-label"><FileText size={16} /> Учебный пример · не принимает отклики</span>
@@ -260,9 +262,9 @@ export function Catalog({
               <div aria-hidden="true"><span /><span /><span /><span /></div>
               <span>Первый набросок</span><strong>100 баллов</strong>
             </div>
-            <button onClick={create}>
+            {canCreate && <button onClick={create}>
               Создать карточку <ArrowRight size={18} />
-            </button>
+            </button>}
           </section>
           <section className="how-it-works">
             <h3>Как всё устроено</h3>
