@@ -1,0 +1,26 @@
+{
+  "date": "2026-09-23",
+  "scope": "service-desk",
+  "applicationCommit": "cafe32fe6b176aef2add379b49762eefd55739f8",
+  "type": "Recorded browser observations, not an automated test runner",
+  "environment": {"os": "Windows", "node": "22.15.0", "browser": "Codex in-app browser", "origin": "http://127.0.0.1:4182/", "timezone": "Asia/Yekaterinburg"},
+  "summary": {"total": 12, "pass": 10, "fail": 2, "newBugs": ["BUG-002"]},
+  "results": [
+    {"id": "UI-01", "result": "PASS", "file": "valid.csv", "beforeCount": 50, "afterCount": 51, "added": 1, "updated": 1, "unrelatedUnchanged": 49},
+    {"id": "UI-02", "result": "PASS", "file": "valid.csv", "count": 51, "added": 0, "updated": 2, "unchanged": true},
+    {"id": "UI-03", "result": "PASS", "file": "invalid-status.csv", "error": "Строка 3: Статус должен быть одним из: Новая, В работе, Решена, Отменена.", "unchanged": true},
+    {"id": "UI-04", "result": "PASS", "file": "duplicate-id.csv", "error": "Строка 3: Номер повторяется или длиннее 80 символов.", "unchanged": true},
+    {"id": "UI-05", "result": "PASS", "file": "missing-header.csv", "error": "Не найден обязательный столбец: status.", "unchanged": true},
+    {"id": "UI-06", "result": "PASS", "file": "broken-quotes.csv", "error": "В CSV не закрыты кавычки.", "unchanged": true},
+    {"id": "UI-07", "result": "PASS", "file": "oversize.csv", "bytes": 2000044, "error": "Максимальный размер файла — 2 МБ.", "unchanged": true},
+    {"id": "UI-08", "result": "PASS", "action": "Reload after rejected imports", "count": 51, "unchanged": true},
+    {"id": "UI-09", "result": "PASS", "action": "Edit via UI and reload", "record": {"id": "QA-UI-001", "assignee": "Менеджер Б", "status": "Решена"}},
+    {"id": "UI-10", "result": "PASS", "file": "literal-text.csv", "text": "<b>QA literal text</b>", "childElements": 0},
+    {"id": "UI-11", "result": "FAIL", "bug": "BUG-002", "action": "Import formula-like.csv and reload", "before": {"id": "=QA-FORMULA", "title": "=1+1"}, "after": {"id": "'=QA-FORMULA", "title": "'=1+1"}},
+    {"id": "UI-12", "result": "FAIL", "bug": "BUG-002", "action": "Reimport formula-like.csv after reload", "expectedCount": 53, "actualCount": 54, "added": 1, "updated": 0, "ids": ["'=QA-FORMULA", "=QA-FORMULA"]}
+  ],
+  "nodeRuns": [
+    {"command": "node --test core.test.mjs qa-hour-01.test.mjs", "pass": 26, "fail": 0, "exitCode": 0},
+    {"command": "node --test qa-known-bugs.test.mjs", "pass": 0, "fail": 1, "exitCode": 1, "bug": "BUG-001"}
+  ]
+}
