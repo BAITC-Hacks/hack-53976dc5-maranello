@@ -19,6 +19,7 @@ Swagger: GET /docs. Машинный контракт: GET /openapi.json.
 | Метод | Путь | Успех | Ответ |
 | --- | --- | --- | --- |
 | GET | /health | 200 | {"status":"ok"}, с проверкой SQLite |
+| GET | /api/teams | 200 | TeamProfile[] — демонстрационный справочник |
 | POST | /api/tasks | 201 | Task |
 | GET | /api/tasks | 200 | Task[] — опубликованные |
 | GET | /api/tasks/{task_id} | 200 | Task любого статуса |
@@ -32,7 +33,7 @@ Swagger: GET /docs. Машинный контракт: GET /openapi.json.
 | GET | /api/tasks/{task_id}/proposals | 200 | Proposal[] |
 | PATCH | /api/proposals/{proposal_id} | 200 | Proposal |
 
-Оба списка: limit=50 (1–100), offset=0 (≥0), ответ — массив без total.
+Списки задач, предложений и профилей: limit=50 (1–100), offset=0 (≥0), ответ — массив без total.
 Каталог дополнительно принимает:
 
 | Параметр | Значения / поведение |
@@ -171,6 +172,19 @@ Provider: mock, openai, fallback или legacy (мигрированные/seed-
 Fallback_reason: null, missing_api_key или invalid_or_unavailable_ai.
 Это сведения о последнем анализе при создании/ответах. После ручного PATCH
 metadata не переопределяется, но GET questions и rating отражают текущую карточку.
+
+## Профили команд (QA seed)
+
+GET /api/teams — read-only справочник, сортировка id ASC, limit/offset.
+В чистой seed-базе пять профилей. Формат элемента:
+
+```json
+{"id":1,"name":"Data Bakers","description":"Демонстрационная команда аналитиков: отчёты и визуализация продаж.","skills":["Python","CSV","React","Визуализация данных"],"contact":"bakers@example.com"}
+```
+
+Профили создаёт `python -m database.seed` из `database/team_profiles.json`.
+Запись профилей через API и регистрация не входят в MVP. Поля предложений остаются
+свободным вводом, профиль не назначает команду и не подтверждает её личность.
 
 ## Предложения команд
 

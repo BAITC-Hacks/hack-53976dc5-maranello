@@ -50,6 +50,17 @@ class Task(Base):
         return rating_for(self)
 
 
+class TeamProfile(Base):
+    """Small demo directory; profiles are not accounts or automatic assignments."""
+    __tablename__ = "team_profiles"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    name: Mapped[str] = mapped_column(String(200), unique=True)
+    description: Mapped[str] = mapped_column(Text)
+    skills: Mapped[list] = mapped_column(JSON, default=list)
+    contact: Mapped[str] = mapped_column(String(500))
+
+
 class Proposal(Base):
     __tablename__ = "proposals"
     __table_args__ = (

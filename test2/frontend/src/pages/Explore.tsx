@@ -44,7 +44,12 @@ export function Catalog() {
   useEffect(() => { setMore([]); setMoreBusy(false); setMoreError(''); setHasMore(false); setTopicInput(topic) }, [topic, level, sort])
   useEffect(() => { if (resource.data) { setHasMore(resource.data.length === 12); void loadCounts(resource.data.map(task => task.id)) } }, [resource.data, loadCounts])
   const topics = Array.from(new Set(tasks.map(task => task.topic).filter(Boolean)))
-  function filter(key: string, value: string) { const next = new URLSearchParams(search); value ? next.set(key, value) : next.delete(key); setSearch(next) }
+  function filter(key: string, value: string) {
+    // Router transitions can leave this render's search stale during a quick second edit.
+    const next = new URLSearchParams(window.location.search)
+    value ? next.set(key, value) : next.delete(key)
+    setSearch(next)
+  }
   async function loadMore() {
     const query = search.toString()
     setMoreBusy(true); setMoreError('')

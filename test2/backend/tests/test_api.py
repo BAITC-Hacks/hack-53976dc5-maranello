@@ -147,8 +147,8 @@ def test_each_score_weight(field, weight):
 
 def test_seed_idempotency_persistence_and_foreign_keys(tmp_path):
     url = f"sqlite:///{tmp_path / 'seed.db'}"
-    assert seed(url) == {"added_tasks": 8, "added_proposals": 5}
-    assert seed(url) == {"added_tasks": 0, "added_proposals": 0}
+    assert seed(url) == {"added_tasks": 8, "added_proposals": 5, "added_teams": 5}
+    assert seed(url) == {"added_tasks": 0, "added_proposals": 0, "added_teams": 0}
     with TestClient(create_app(url)) as client:
         assert len(client.get("/api/tasks").json()) == 5
         with client.app.state.session_factory() as db:

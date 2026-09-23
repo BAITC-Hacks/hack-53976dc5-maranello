@@ -12,9 +12,9 @@ from database.migrate import initialize_database
 
 from .ai import TaskAI
 from .database import make_engine, session_factory
-from .models import Proposal, Task, utcnow
+from .models import Proposal, Task, TeamProfile, utcnow
 from .schemas import (AnswersSubmit, Card, CardPatch, HealthRead, Level, ProposalCreate, ProposalDecision,
-                      ProposalRead, QuestionsRead, RatingRead, TaskCreate, TaskRead)
+                      ProposalRead, QuestionsRead, RatingRead, TaskCreate, TaskRead, TeamProfileRead)
 from .services import confirm_task, questions_for, refresh_rating, reset_confirmation
 
 
@@ -72,6 +72,11 @@ def create_app(database_url=None, ai_service=None):
     def health(db: Session = Depends(get_db)):
         db.execute(text("SELECT 1"))
         return {"status": "ok"}
+
+    @application.get("/api/teams", response_model=List[TeamProfileRead])
+    def list_teams(limit: int = Query(50, ge=1, le=100), offset: int = Query(0, ge=0),
+                   db: Session = Depends(get_db)):
+        return db.scalars(select(TeamProfile).order_by(TeamProfile.id).offset(offset).limit(limit)).all()
 
     @application.post("/api/tasks", response_model=TaskRead, status_code=201)
     def create_task(payload: TaskCreate, request: Request, db: Session = Depends(get_db)):

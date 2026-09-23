@@ -153,5 +153,13 @@ class ProposalDecision(Schema):
     status: Literal["accepted", "rejected"]
 
 
+class TeamProfileRead(Schema):
+    id: int
+    name: str
+    description: str
+    skills: List[str]
+    contact: str
+
+
 class HealthRead(Schema):
     status: Literal["ok"]

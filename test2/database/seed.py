@@ -5,7 +5,7 @@ import os
 from sqlalchemy import select
 
 from backend.app.database import ROOT, make_engine, session_factory
-from backend.app.models import Proposal, Task, utcnow
+from backend.app.models import Proposal, Task, TeamProfile, utcnow
 from backend.app.services import confirm_task, refresh_rating
 from database.migrate import initialize_database
 
@@ -14,9 +14,14 @@ def seed(database_url=None):
     engine = make_engine(database_url or os.getenv("DATABASE_URL", "sqlite:///./database/app.db"))
     initialize_database(engine)
     data = json.loads((ROOT / "database/seed_data.json").read_text(encoding="utf-8"))
-    added_tasks = added_proposals = 0
+    teams = json.loads((ROOT / "database/team_profiles.json").read_text(encoding="utf-8"))
+    added_tasks = added_proposals = added_teams = 0
     try:
         with session_factory(engine)() as db:
+            for profile in teams:
+                if db.scalar(select(TeamProfile).where(TeamProfile.name == profile["name"])) is None:
+                    db.add(TeamProfile(**profile))
+                    added_teams += 1
             for item in data:
                 # Reserved demo descriptions identify fixtures; never overwrite user edits.
                 task = db.scalar(select(Task).where(Task.description == item["description"]))
@@ -46,7 +51,7 @@ def seed(database_url=None):
             db.commit()
     finally:
         engine.dispose()
-    return {"added_tasks": added_tasks, "added_proposals": added_proposals}
+    return {"added_tasks": added_tasks, "added_proposals": added_proposals, "added_teams": added_teams}
 
 
 if __name__ == "__main__":

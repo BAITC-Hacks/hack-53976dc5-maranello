@@ -1,0 +1,32 @@
+[
+  {
+    "name": "Data Bakers",
+    "description": "Демонстрационная команда аналитиков: отчёты и визуализация продаж.",
+    "skills": ["Python", "CSV", "React", "Визуализация данных"],
+    "contact": "bakers@example.com"
+  },
+  {
+    "name": "Charts Lab",
+    "description": "Демонстрационная команда для понятных отчётов и проверки данных.",
+    "skills": ["Аналитика", "SQL", "PDF-отчёты"],
+    "contact": "charts@example.com"
+  },
+  {
+    "name": "Campus Team",
+    "description": "Демонстрационная full-stack команда для реестров, форм и поиска.",
+    "skills": ["React", "FastAPI", "SQLite", "UX"],
+    "contact": "campus@example.com"
+  },
+  {
+    "name": "Discovery Team",
+    "description": "Демонстрационная команда для интервью и проверки гипотез бизнеса.",
+    "skills": ["Интервью", "Прототипирование", "Продуктовые исследования"],
+    "contact": "discovery@example.com"
+  },
+  {
+    "name": "Attendance Lab",
+    "description": "Демонстрационная команда для анализа образовательных данных.",
+    "skills": ["Python", "Статистика", "CSV", "Диаграммы"],
+    "contact": "attendance@example.com"
+  }
+]
