@@ -14,7 +14,7 @@ Business representatives describing problems and student teams proposing solutio
 Turn a short business problem into a reviewed, structured task and connect it with a student team's proposal.
 
 ## Operating Context
-Desktop-first live demonstration. Switch between Business and Student Team without registration.
+Desktop-first live demonstration, with a five-minute judging scenario documented in docs/DEMO.md. Switch between Business and Student Team without registration. Tablet and mobile browsers must preserve the same flow.
 
 ## Capabilities and Constraints
 Seven surfaces: overview, create, clarification, editor, catalog, details, proposals.
@@ -26,7 +26,7 @@ The user requests a clean modern SaaS/edtech dashboard, excellent typography, ca
 Working assumption pending optional feedback: Russian UI and the temporary name «Практика».
 
 ## Evidence on Hand
-docs/SPEC.md, docs/API_CONTRACT.md, docs/HANDOFF.md, actual local backend and its seed data. No invented testimonials, users, organizations or activity.
+docs/SPEC.md, docs/API_CONTRACT.md, docs/DEMO.md, docs/HANDOFF.md, actual local backend and its seed data. No invented testimonials, users, organizations or activity.
 
 ## Product Principles
 Keep the next action obvious. Preserve user input on failures. Explain scores without judging ideas. Separate draft completeness from publishing eligibility. Make choices explicit.

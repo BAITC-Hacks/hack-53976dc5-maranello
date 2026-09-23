@@ -4,7 +4,7 @@ import { ArrowLeft, ArrowRight, Check, CheckCheck, FileText, Lightbulb, LoaderCi
 import { api } from '../api'
 import { BusyLabel, EmptyState, ErrorNotice, Loading, PageHeading, RatingWidget, Stepper } from '../components'
 import { fields, labels } from '../content'
-import { readStorage, useResource, writeStorage } from '../hooks'
+import { isStringRecord, readStorage, useResource, writeStorage } from '../hooks'
 import { useWorkspace } from '../workspace'
 import type { Card, CardField, Questions, Task } from '../types'
 
@@ -14,7 +14,7 @@ export function BusinessOnly({ children }: { children: ReactNode }) {
 }
 
 export function CreateTask() {
-  const initial = readStorage<{ description: string; topic: string }>('praktika-description', { description: '', topic: '' })
+  const initial = readStorage<{ description: string; topic: string }>('praktika-description', { description: '', topic: '' }, (value): value is { description: string; topic: string } => isStringRecord(value) && typeof value.description === 'string' && typeof value.topic === 'string')
   const [description, setDescription] = useState(initial.description || '')
   const [topic, setTopic] = useState(initial.topic || '')
   const [busy, setBusy] = useState(false)
@@ -49,7 +49,7 @@ export function Clarification() {
 function ClarificationForm({ task, questions }: { task: Task; questions: Questions }) {
   const navigate = useNavigate()
   const { remember } = useWorkspace()
-  const [answers, setAnswers] = useState<Partial<Card>>(() => readStorage(`praktika-answers-${task.id}`, task.answers))
+  const [answers, setAnswers] = useState<Partial<Card>>(() => readStorage(`praktika-answers-${task.id}`, task.answers, isStringRecord))
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
   const populated = fields.filter(field => !questions.missing_fields.includes(field.key))
@@ -80,8 +80,10 @@ function EditorForm({ initial }: { initial: Task }) {
   const [task, setTask] = useState(initial)
   const toForm = (value: Task) => Object.fromEntries([...fields.map(field => [field.key, value[field.key]]), ['topic', value.topic]]) as Card & { topic: string }
   const [form, setForm] = useState(() => {
-    const cached = readStorage<{ updated: string; values: Card & { topic: string } } | null>(`praktika-editor-${initial.id}`, null)
-    return cached?.updated === initial.updated_at ? cached.values : toForm(initial)
+    const saved = toForm(initial)
+    const cached = readStorage<{ updated: string; values: Record<string, string> } | null>(`praktika-editor-${initial.id}`, null, (value): value is { updated: string; values: Record<string, string> } => typeof value === 'object' && value !== null && 'updated' in value && typeof value.updated === 'string' && 'values' in value && isStringRecord(value.values))
+    if (cached?.updated !== initial.updated_at) return saved
+    return Object.fromEntries(Object.entries(saved).map(([key, value]) => [key, cached.values[key] ?? value])) as typeof saved
   })
   const [busy, setBusy] = useState('')
   const [error, setError] = useState('')
@@ -101,7 +103,7 @@ function EditorForm({ initial }: { initial: Task }) {
       if (action === 'confirm') { updated = await api.confirm(task.id); setTask(updated); notify('Карточка подтверждена. Теперь её можно опубликовать.') }
       if (action === 'publish') { updated = await api.publish(task.id); remember(updated); void refresh(); notify('Задача опубликована. Команды могут предложить решение.'); navigate(`/tasks/${task.id}`); return }
       remember(updated)
-      if (action === 'save') notify('Изменения сохранены. Рейтинг обновлён.')
+      if (action === 'save') notify('Изменения сохранены. Баллы за полноту описания обновлены.')
     } catch (error) { setError((error as Error).message) } finally { setBusy('') }
   }
   const groups = [

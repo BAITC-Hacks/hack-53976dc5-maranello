@@ -4,7 +4,7 @@ import { ArrowLeft, ArrowRight, ArrowUpRight, BriefcaseBusiness, Check, CheckChe
 import { allProposals, api } from '../api'
 import { Badge, BusyLabel, EmptyState, ErrorNotice, Loading, PageHeading, RatingWidget } from '../components'
 import { fields, formatDate, proposalCount, titleOf, topicOf } from '../content'
-import { readStorage, useResource, writeStorage } from '../hooks'
+import { isStringRecord, readStorage, useResource, writeStorage } from '../hooks'
 import { useWorkspace } from '../workspace'
 import type { Proposal, ProposalInput, Task } from '../types'
 import { BusinessOnly } from './Intake'
@@ -23,7 +23,7 @@ export function TaskDetails() {
     <div className="editor-layout"><div className="detail-main">{task.status !== 'published' && <div className="inline-notice">Эта задача ещё не опубликована. {role === 'business' && <Link to={Object.keys(task.answers).length < 3 ? `/tasks/${id}/questions` : `/tasks/${id}/edit`}>Продолжить подготовку<ArrowRight size={15} /></Link>}</div>}
       <article className="detail-body">{fields.filter(field => field.key !== 'title').map(field => <section className={`detail-field ${!task[field.key] ? 'unfilled' : ''}`} key={field.key}><h2>{field.label}</h2><p>{task[field.key] || 'Пока не уточнено'}</p></section>)}</article>
       {role === 'student' && task.status === 'published' && <div className="detail-invitation"><div><h2>Есть идея решения?</h2><p>Расскажите о подходе вашей команды.</p></div><Link className="button primary" to={`/tasks/${id}/propose`}>Предложить решение<ArrowRight size={17} /></Link></div>}
-    </div><div className="detail-aside">{task.status === 'published' && <div className="task-action-panel">{role === 'student' ? <><GraduationCap size={25} /><h2>Здесь пригодятся<br />ваши знания.</h2><p>Идея, план и немного смелости — всё, что нужно для первого шага.</p><Link className="button primary" to={`/tasks/${id}/propose`}>Предложить решение<ArrowUpRight size={17} /></Link><span>Любой рейтинг открыт для отклика</span></> : <><Users size={24} /><h2>Найдите свою команду</h2><p>Изучите предложения и выберите подход к решению.</p><Link className="button primary" to={`/tasks/${id}/proposals`}>Смотреть предложения<ArrowRight size={17} /></Link><span>Выбор всегда остаётся за вами</span></>}</div>}<RatingWidget rating={task.rating} /></div></div>
+    </div><div className="detail-aside">{task.status === 'published' && <div className="task-action-panel">{role === 'student' ? <><GraduationCap size={25} /><h2>Здесь пригодятся<br />ваши знания.</h2><p>Идея, план и немного смелости — всё, что нужно для первого шага.</p><Link className="button primary" to={`/tasks/${id}/propose`}>Предложить решение<ArrowUpRight size={17} /></Link><span>Можно откликнуться при любом количестве баллов</span></> : <><Users size={24} /><h2>Найдите свою команду</h2><p>Изучите предложения и выберите подход к решению.</p><Link className="button primary" to={`/tasks/${id}/proposals`}>Смотреть предложения<ArrowRight size={17} /></Link><span>Выбор всегда остаётся за вами</span></>}</div>}<RatingWidget rating={task.rating} /></div></div>
   </>
 }
 
@@ -40,7 +40,12 @@ export function Propose() {
 }
 function ProposalForm({ task }: { task: Task }) {
   const blank = { team_name: '', solution_idea: '', plan: '', estimated_duration: '', prototype_url: '', contact: '' }
-  const [form, setForm] = useState<ProposalInput>(() => ({ ...blank, ...readStorage(`praktika-proposal-${task.id}`, blank) }))
+  const [form, setForm] = useState<ProposalInput>(() => {
+    const cached = readStorage<Record<string, string>>(`praktika-proposal-${task.id}`, blank, isStringRecord)
+    const restored = { ...blank }
+    for (const key of Object.keys(blank) as (keyof ProposalInput)[]) restored[key] = cached[key] ?? ''
+    return restored
+  })
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
   const [sent, setSent] = useState<Proposal | null>(null)

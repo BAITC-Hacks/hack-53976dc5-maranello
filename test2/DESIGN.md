@@ -18,7 +18,7 @@ colors:
 typography:
   headline:
     fontFamily: "'Manrope Variable', Manrope, sans-serif"
-    fontSize: "2.35rem"
+    fontSize: "clamp(30px, 2.7vw, 40px)"
     fontWeight: 650
     lineHeight: 1.28
     letterSpacing: "-.025em"
@@ -34,16 +34,16 @@ typography:
     lineHeight: 1.6
   action:
     fontFamily: "'Manrope Variable', Manrope, sans-serif"
-    fontSize: "12px"
+    fontSize: "14px"
     fontWeight: 650
     lineHeight: 1.5
   field-label:
     fontFamily: "'Manrope Variable', Manrope, sans-serif"
-    fontSize: "11px"
+    fontSize: "13px"
     fontWeight: 700
   score:
     fontFamily: "'Manrope Variable', Manrope, sans-serif"
-    fontSize: "43px"
+    fontSize: "46px"
     fontWeight: 600
     lineHeight: 1.15
     letterSpacing: "-.035em"
@@ -150,9 +150,9 @@ Error and focus colors are functional states. Readiness and proposal badges pair
 
 Manrope Variable is bundled through `@fontsource-variable/manrope`; the fallback stack is in the tokens. It serves headings, body, controls and figures. There is no separate display or monospace face.
 
-The headline and title tokens describe base heading rules. Page introductions use 13px copy with 1.8 line height and up to 72ch. Task titles use 16px/1.45, weight 650; form content and buttons mostly use 12px. Supporting text is commonly 10–11px, with compact 9px status text in the current MVP. These compact sizes describe existing components, not a blanket size for new body copy.
+The headline and title tokens describe base heading rules. Page introductions use 15px copy with 1.8 line height and up to 72ch. Task titles use 18px/1.45, weight 650; form content uses 15px and buttons use 14px. Shared type tokens are micro 11px, caption 12px, label 13px, body 14px and reading 15px. Mobile input text is 16px. The smallest token is reserved for short status metadata.
 
-Large rating figures use the score token and tabular numerals; smaller card scores use 15px, weight 750. Welcome headings vary from 32–34px on the default desktop layout. Heading tracking is slightly tight; paragraph text retains normal tracking.
+Large rating figures use the score token and tabular numerals; smaller card scores use 19px, weight 750. Welcome headings vary from 34–36px on the default desktop layout. Heading tracking is slightly tight; paragraph text retains normal tracking.
 
 **The Number Stays Readable Rule.** Keep score numerals tabular and show the denominator alongside each total.
 
@@ -165,12 +165,11 @@ Responsive rules are CSS viewport thresholds, not device detection:
 | Threshold | Implemented change |
 | --- | --- |
 | ≥1600px | Main top padding grows to 50px; business welcome heading grows to 38px. |
-| ≤1190px | Sidebar becomes 208px, content gutters 27px; editor fields stack; filters wrap. |
-| ≤960px | Sidebar becomes 190px, gutters 23px; task grid becomes two columns; intake and clarification asides stack. |
-| ≤760px | Sidebar becomes a 235px off-canvas drawer with scrim; header becomes 68px; content gutters become 20px and base h1 becomes 27px. Editor still has two columns. |
+| ≤1190px | Sidebar becomes 208px, content gutters 27px; editor fields stack; filters wrap; task grids become two columns. |
+| ≤960px | Sidebar becomes a 235px off-canvas drawer; header becomes 68px; main gutters become 20px. Intake, clarification and editor columns stack; rating rail stops sticking. |
 | ≤580px | Task, welcome, editor and proposal content grids become one column; rating stops sticking; paired form fields stack. |
 
-The current minimum body width is 360px. Long task and proposal text wraps; catalog card title and excerpt previews clamp to two lines. Complete text appears on detail surfaces.
+The current minimum body width is 320px. Long task and proposal text wraps; catalog card title and excerpt previews clamp to two lines. Complete text appears on detail surfaces.
 
 ## Elevation & Depth
 
@@ -186,7 +185,7 @@ Cards and editor panels use the card radius; welcome panels are slightly rounder
 
 ### Buttons
 
-Primary forest actions, white bordered secondary actions, pale welcome actions and red decision confirmation share 43px minimum height, 9px icon gap and the action type token. Small actions use 36px minimum height, 8px 12px padding and 11px type. Hover transitions run for 180ms. Disabled buttons use 0.48 opacity and a not-allowed cursor; busy actions show a spinner and explicit action text.
+Primary forest actions, white bordered secondary actions, pale welcome actions and red decision confirmation share 46px minimum height, 9px icon gap and the action type token. Small actions use 44px minimum height, 8px 12px padding and 13px type. Hover transitions run for 180ms. Disabled buttons use 0.48 opacity and a not-allowed cursor; busy actions show a spinner and explicit action text.
 
 ### Chips
 
@@ -202,13 +201,13 @@ White fields have a one-pixel border, 46px minimum input/select height and a for
 
 ### Navigation
 
-Sidebar links use icons, labels and a pale-green active surface with stronger type. The role selector uses pressed button state and a white selected surface. The mobile drawer opens from the header and closes by the scrim or a route change. A skip link targets the main region.
+Sidebar links use icons, labels and a pale-green active surface with stronger type. The role selector uses pressed button state and a white selected surface. The mobile drawer opens from the header and closes by the scrim, Escape or a route change. Closed navigation is hidden from keyboard access; opening places focus inside it and Tab stays within its controls. Escape restores focus to the menu button. A skip link targets the main region.
 
 The role switch is a demo preference stored locally, not authentication or authorization. Locally remembered task IDs drive the working-task list; they do not establish ownership.
 
 ### Rating and decisions
 
-The rating widget shows the server's score, level, breakdown and missing-field guidance. Total bars are 7px high, card bars 4px and breakdown bars 3px; changes animate for 450ms with `cubic-bezier(.16,1,.3,1)`. Unsaved edits keep the last server rating and show a save reminder. Saving replaces the card and rating with the API response; confirmation saves outstanding edits first, and publication remains a separate action. No rating threshold disables publishing or proposals.
+The rating widget shows the server's score, level, breakdown and missing-field guidance. Total bars are 7px high, card bars 4px and breakdown bars 3px; changes animate for 450ms with `cubic-bezier(.16,1,.3,1)`. Unsaved edits keep the last server rating and show a save reminder. Saving replaces the card and rating with the API response; confirmation saves outstanding edits first, and publication remains a separate action. The editor action bar stays at the viewport bottom while its form is in view; mobile actions stack for readable labels. No rating threshold disables publishing or proposals.
 
 Manual accept/reject actions expand an explicit confirmation row before sending the decision. Skeletons, inline errors and status toasts distinguish waiting, failure and success. Reduced-motion preference disables all animation and transitions.
 
@@ -227,3 +226,11 @@ Manual accept/reject actions expand an explicit confirmation row before sending 
 - Don't turn a low readiness score into a publishing or proposal restriction.
 - Don't replace API loading or error states with invented activity.
 - Don't treat the working name or studio metaphor as user-approved standing branding.
+
+## Catalog and accessibility refinements — 2026-09-23
+
+The score is labeled «Полнота описания» throughout the UI. Russian levels describe the amount of supplied detail, not task quality or priority. Numeric scores are announced once; duplicate decorative meters are hidden from assistive technology.
+
+At ≤580px, catalog search stays visible and a «Фильтры» button reveals completeness and sorting controls. Active filters remain visible and individually removable. Filter controls are always visible at larger widths. The catalog explains what scores measure. Mobile role controls have a 44px minimum target.
+
+The mobile navigation is a dismissible dialog with an explicit close button, focus containment, inert background, and focus return. Route changes focus main content and update the tab title; notifications use a persistent live region.

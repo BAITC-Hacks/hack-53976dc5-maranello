@@ -13,11 +13,11 @@ export const fields: { key: CardField; label: string; hint: string }[] = [
   { key: 'interaction_format', label: 'Формат взаимодействия', hint: 'Как часто и в каком формате вы готовы общаться?' },
 ]
 export const labels = Object.fromEntries(fields.map(field => [field.key, field.label])) as Record<CardField, string>
-export const levels: Record<Level, { label: string; english: string }> = {
-  draft: { label: 'На старте', english: 'Draft' },
-  workable: { label: 'Можно работать', english: 'Workable' },
-  ready: { label: 'Готова к работе', english: 'Ready' },
-  priority: { label: 'Приоритетная', english: 'Priority' },
+export const levels: Record<Level, { label: string }> = {
+  draft: { label: 'Мало деталей' },
+  workable: { label: 'Часть описана' },
+  ready: { label: 'Много деталей' },
+  priority: { label: 'Подробное описание' },
 }
 export const componentLabels: Record<string, string> = {
   context_need: 'Контекст и потребность', data_materials: 'Данные и материалы',

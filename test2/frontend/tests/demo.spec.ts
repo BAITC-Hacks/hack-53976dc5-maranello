@@ -31,7 +31,7 @@ test('desktop and mobile use real catalog data and have no overflow', async ({ p
   await expect(page.locator('.task-card').first()).toBeVisible()
   await page.getByLabel('Сортировка').selectOption('rating_asc')
   await expect(page.locator('.task-card .small-score').first()).toHaveText(`${Math.min(...tasks.map((task: any) => task.rating.score))}/100`)
-  await page.getByLabel('Уровень готовности').selectOption('ready')
+  await page.getByLabel('Полнота описания', { exact: true }).selectOption('ready')
   await expect(page.locator('.task-card').first()).toBeVisible()
   for (const text of await page.locator('.task-card .small-score').allTextContents()) expect(Number(text.split('/')[0])).toBeGreaterThanOrEqual(70)
   await page.getByLabel('Тема задачи').fill('несуществующая-тема-для-проверки')

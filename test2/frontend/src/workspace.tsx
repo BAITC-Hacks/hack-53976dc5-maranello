@@ -14,18 +14,17 @@ const Context = createContext<Workspace>(null!)
 export const useWorkspace = () => useContext(Context)
 
 export function WorkspaceProvider({ children }: { children: ReactNode }) {
-  const storedRole = readStorage<Role>('praktika-role', 'business')
-  const [role, setRoleState] = useState<Role>(storedRole === 'student' ? 'student' : 'business')
+  const [role, setRoleState] = useState<Role>(() => readStorage<unknown>('praktika-role', 'business') === 'student' ? 'student' : 'business')
   const [knownIds, setKnownIds] = useState<number[]>(() => {
     const value = readStorage<unknown>('praktika-tasks', [])
-    return Array.isArray(value) ? value.filter(id => Number.isInteger(id) && id > 0) : []
+    return Array.isArray(value) ? [...new Set(value.filter(id => Number.isSafeInteger(id) && id > 0))] : []
   })
   const [tasks, setTasks] = useState<Task[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [counts, setCounts] = useState<Record<number, number | null>>({})
   const countCache = useRef<Record<number, number | null>>({})
-  const activeCounts = useRef(new Set<number>())
+  const activeCounts = useRef(new Map<number, { promise: Promise<void>; refreshRequested: boolean }>())
   const refreshGeneration = useRef(0)
   const [toast, setToast] = useState('')
   const refresh = useCallback(async () => {
@@ -38,14 +37,32 @@ export function WorkspaceProvider({ children }: { children: ReactNode }) {
   useEffect(() => { void refresh() }, [refresh])
   useEffect(() => { if (toast) { const timer = setTimeout(() => setToast(''), 6000); return () => clearTimeout(timer) } }, [toast])
   const loadCounts = useCallback(async (ids: number[], force = false) => {
-    const queue = ids.filter(id => !activeCounts.current.has(id) && (force || countCache.current[id] === undefined))
-    queue.forEach(id => activeCounts.current.add(id))
+    const queue = [...new Set(ids)].filter(id => Number.isSafeInteger(id) && id > 0)
     const worker = async () => {
       while (queue.length) {
         const id = queue.shift()!
-        try { countCache.current[id] = (await allProposals(id)).length }
-        catch { countCache.current[id] = null }
-        finally { activeCounts.current.delete(id); setCounts({ ...countCache.current }) }
+        const active = activeCounts.current.get(id)
+        if (active) {
+          // A forced refresh may follow a new proposal while the old count is still loading.
+          if (force) active.refreshRequested = true
+          await active.promise
+          continue
+        }
+        // Failed requests remain retryable when the catalog is visited again.
+        if (!force && typeof countCache.current[id] === 'number') continue
+        const pending = { promise: Promise.resolve(), refreshRequested: false }
+        pending.promise = (async () => {
+          try {
+            do {
+              pending.refreshRequested = false
+              try { countCache.current[id] = (await allProposals(id)).length }
+              catch { countCache.current[id] = null }
+              setCounts({ ...countCache.current })
+            } while (pending.refreshRequested)
+          } finally { activeCounts.current.delete(id) }
+        })()
+        activeCounts.current.set(id, pending)
+        await pending.promise
       }
     }
     await Promise.all(Array.from({ length: Math.min(4, queue.length) }, worker))
