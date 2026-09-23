@@ -1,0 +1,47 @@
+{
+  "date": "2026-09-23",
+  "timezone": "Asia/Yekaterinburg",
+  "scope": "AI Sana published site and repository main snapshot; service-desk regression checks",
+  "sourceCommit": "8fa9824ececfb9afed0e36a606b1754f40d4e4bb",
+  "deploymentCommitVerified": false,
+  "publishedSite": "https://ai-sana-practice.ramirr2006.chatgpt.site/",
+  "publicBrowserChecks": {
+    "pass": 10,
+    "fail": 0,
+    "results": [
+      {"id": "PUB-01", "result": "PASS", "observation": "Open catalog: 3 tasks"},
+      {"id": "PUB-02", "result": "PASS", "observation": "Search Панель обработки заявок: 1 task"},
+      {"id": "PUB-03", "result": "PASS", "observation": "Unmatched search: 0 tasks and empty-state hint"},
+      {"id": "PUB-04", "result": "PASS", "observation": "UX/UI skill: 1 task"},
+      {"id": "PUB-05", "result": "PASS", "observation": "All tasks: 5, including 2 with Команда выбрана"},
+      {"id": "PUB-06", "result": "PASS", "observation": "Published test task detail: 100/100, fields and guest sign-in link"},
+      {"id": "PUB-07", "result": "PASS", "observation": "Selected test task detail shows Команда выбрана and 100/100"},
+      {"id": "PUB-08", "result": "PASS", "observation": "Example detail explicitly says fictional and no responses"},
+      {"id": "PUB-09", "result": "PASS", "observation": "Place task as guest opens /login"},
+      {"id": "PUB-10", "result": "PASS", "observation": "Student role can be selected on /login"}
+    ]
+  },
+  "aiSanaUnitChecks": {
+    "command": "node --experimental-strip-types --test lib/quality.test.ts lib/merge-assistant.test.ts lib/auth-crypto.test.ts",
+    "pass": 6,
+    "fail": 0,
+    "exitCode": 0,
+    "fullSuiteRun": false,
+    "reason": "npm ci failed with ENOSPC; behavior.test.ts needs unavailable zod dependency"
+  },
+  "serviceDeskRegression": {
+    "greenSuite": {"command": "node --test ../service-desk/core.test.mjs qa-hour-01.test.mjs", "pass": 26, "fail": 0, "exitCode": 0},
+    "knownBugSuite": {"command": "node --test qa-known-bugs.test.mjs", "pass": 0, "fail": 1, "exitCode": 1, "bug": "BUG-001"},
+    "bug002": "Source still restores saved records via importCSV(exportCSV(parsed)); browser scenario was not repeated on this snapshot"
+  },
+  "authenticatedEndToEnd": {
+    "status": "NOT_RUN",
+    "steps": 12,
+    "reason": "Passwords for business and student test accounts were not available"
+  },
+  "localBuildAndApi": {
+    "status": "NOT_RUN",
+    "reason": "npm ci failed with ENOSPC. Partial node_modules created by this run was removed."
+  },
+  "dataChangedOnPublishedSite": false
+}
