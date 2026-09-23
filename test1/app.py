@@ -7,6 +7,7 @@ from database import get_initial_tasks, get_initial_teams
 from scoring import calculate_score
 
 
+
 st.set_page_config(page_title="AI Sana — бизнес-задачи", page_icon="🚀", layout="wide")
 
 TOPICS = ["Торговля", "Образование", "Сервис", "Экология", "Операции", "Другое"]
