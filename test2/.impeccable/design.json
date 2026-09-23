@@ -1,0 +1,380 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-23T10:59:16.200801+00:00",
+  "title": "Design System: Практика",
+  "extensions": {
+    "colorMeta": {
+      "brand": {
+        "role": "primary",
+        "displayName": "Brand",
+        "tonalRamp": [
+          "oklch(15.00% 0.06882 167.09)",
+          "oklch(26.43% 0.06882 167.09)",
+          "oklch(37.86% 0.06882 167.09)",
+          "oklch(49.29% 0.06882 167.09)",
+          "oklch(60.71% 0.06882 167.09)",
+          "oklch(72.14% 0.06882 167.09)",
+          "oklch(83.57% 0.06882 167.09)",
+          "oklch(95.00% 0.06882 167.09)"
+        ]
+      },
+      "brand-hover": {
+        "role": "primary",
+        "displayName": "Brand Hover",
+        "tonalRamp": [
+          "oklch(15.00% 0.05644 166.20)",
+          "oklch(26.43% 0.05644 166.20)",
+          "oklch(37.86% 0.05644 166.20)",
+          "oklch(49.29% 0.05644 166.20)",
+          "oklch(60.71% 0.05644 166.20)",
+          "oklch(72.14% 0.05644 166.20)",
+          "oklch(83.57% 0.05644 166.20)",
+          "oklch(95.00% 0.05644 166.20)"
+        ]
+      },
+      "accent": {
+        "role": "primary",
+        "displayName": "Accent",
+        "tonalRamp": [
+          "oklch(15.00% 0.07869 119.57)",
+          "oklch(26.43% 0.07869 119.57)",
+          "oklch(37.86% 0.07869 119.57)",
+          "oklch(49.29% 0.07869 119.57)",
+          "oklch(60.71% 0.07869 119.57)",
+          "oklch(72.14% 0.07869 119.57)",
+          "oklch(83.57% 0.07869 119.57)",
+          "oklch(95.00% 0.07869 119.57)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "tonalRamp": [
+          "oklch(15.00% 0.02749 165.44)",
+          "oklch(26.43% 0.02749 165.44)",
+          "oklch(37.86% 0.02749 165.44)",
+          "oklch(49.29% 0.02749 165.44)",
+          "oklch(60.71% 0.02749 165.44)",
+          "oklch(72.14% 0.02749 165.44)",
+          "oklch(83.57% 0.02749 165.44)",
+          "oklch(95.00% 0.02749 165.44)"
+        ]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Muted",
+        "tonalRamp": [
+          "oklch(15.00% 0.02413 151.77)",
+          "oklch(26.43% 0.02413 151.77)",
+          "oklch(37.86% 0.02413 151.77)",
+          "oklch(49.29% 0.02413 151.77)",
+          "oklch(60.71% 0.02413 151.77)",
+          "oklch(72.14% 0.02413 151.77)",
+          "oklch(83.57% 0.02413 151.77)",
+          "oklch(95.00% 0.02413 151.77)"
+        ]
+      },
+      "green-text": {
+        "role": "primary",
+        "displayName": "Green Text",
+        "tonalRamp": [
+          "oklch(15.00% 0.07218 133.79)",
+          "oklch(26.43% 0.07218 133.79)",
+          "oklch(37.86% 0.07218 133.79)",
+          "oklch(49.29% 0.07218 133.79)",
+          "oklch(60.71% 0.07218 133.79)",
+          "oklch(72.14% 0.07218 133.79)",
+          "oklch(83.57% 0.07218 133.79)",
+          "oklch(95.00% 0.07218 133.79)"
+        ]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Surface",
+        "tonalRamp": [
+          "oklch(15.00% 0.00000 0.00)",
+          "oklch(26.43% 0.00000 0.00)",
+          "oklch(37.86% 0.00000 0.00)",
+          "oklch(49.29% 0.00000 0.00)",
+          "oklch(60.71% 0.00000 0.00)",
+          "oklch(72.14% 0.00000 0.00)",
+          "oklch(83.57% 0.00000 0.00)",
+          "oklch(95.00% 0.00000 0.00)"
+        ]
+      },
+      "canvas": {
+        "role": "neutral",
+        "displayName": "Canvas",
+        "tonalRamp": [
+          "oklch(15.00% 0.00409 121.56)",
+          "oklch(26.43% 0.00409 121.56)",
+          "oklch(37.86% 0.00409 121.56)",
+          "oklch(49.29% 0.00409 121.56)",
+          "oklch(60.71% 0.00409 121.56)",
+          "oklch(72.14% 0.00409 121.56)",
+          "oklch(83.57% 0.00409 121.56)",
+          "oklch(95.00% 0.00409 121.56)"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Line",
+        "tonalRamp": [
+          "oklch(15.00% 0.01076 136.56)",
+          "oklch(26.43% 0.01076 136.56)",
+          "oklch(37.86% 0.01076 136.56)",
+          "oklch(49.29% 0.01076 136.56)",
+          "oklch(60.71% 0.01076 136.56)",
+          "oklch(72.14% 0.01076 136.56)",
+          "oklch(83.57% 0.01076 136.56)",
+          "oklch(95.00% 0.01076 136.56)"
+        ]
+      },
+      "soft": {
+        "role": "neutral",
+        "displayName": "Soft",
+        "tonalRamp": [
+          "oklch(15.00% 0.01183 133.38)",
+          "oklch(26.43% 0.01183 133.38)",
+          "oklch(37.86% 0.01183 133.38)",
+          "oklch(49.29% 0.01183 133.38)",
+          "oklch(60.71% 0.01183 133.38)",
+          "oklch(72.14% 0.01183 133.38)",
+          "oklch(83.57% 0.01183 133.38)",
+          "oklch(95.00% 0.01183 133.38)"
+        ]
+      },
+      "error": {
+        "role": "neutral",
+        "displayName": "Error state",
+        "tonalRamp": [
+          "oklch(15.00% 0.14006 26.60)",
+          "oklch(26.43% 0.14006 26.60)",
+          "oklch(37.86% 0.14006 26.60)",
+          "oklch(49.29% 0.14006 26.60)",
+          "oklch(60.71% 0.14006 26.60)",
+          "oklch(72.14% 0.14006 26.60)",
+          "oklch(83.57% 0.14006 26.60)",
+          "oklch(95.00% 0.14006 26.60)"
+        ]
+      },
+      "focus": {
+        "role": "neutral",
+        "displayName": "Focus state",
+        "tonalRamp": [
+          "oklch(15.00% 0.07614 154.54)",
+          "oklch(26.43% 0.07614 154.54)",
+          "oklch(37.86% 0.07614 154.54)",
+          "oklch(49.29% 0.07614 154.54)",
+          "oklch(60.71% 0.07614 154.54)",
+          "oklch(72.14% 0.07614 154.54)",
+          "oklch(83.57% 0.07614 154.54)",
+          "oklch(95.00% 0.07614 154.54)"
+        ]
+      },
+      "progress": {
+        "role": "primary",
+        "displayName": "Progress",
+        "tonalRamp": [
+          "oklch(15.00% 0.09971 132.26)",
+          "oklch(26.43% 0.09971 132.26)",
+          "oklch(37.86% 0.09971 132.26)",
+          "oklch(49.29% 0.09971 132.26)",
+          "oklch(60.71% 0.09971 132.26)",
+          "oklch(72.14% 0.09971 132.26)",
+          "oklch(83.57% 0.09971 132.26)",
+          "oklch(95.00% 0.09971 132.26)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "headline": {
+        "displayName": "Page headline",
+        "purpose": "Base h1 rule; mobile and detail overrides are described in DESIGN.md."
+      },
+      "title": {
+        "displayName": "Section title",
+        "purpose": "Base h2 rule."
+      },
+      "body": {
+        "displayName": "Base body",
+        "purpose": "Root type; dense components use explicit smaller sizes."
+      },
+      "action": {
+        "displayName": "Action",
+        "purpose": "Default button label."
+      },
+      "field-label": {
+        "displayName": "Field label",
+        "purpose": "Editor and proposal form labels."
+      },
+      "score": {
+        "displayName": "Rating score",
+        "purpose": "Large tabular score total."
+      }
+    },
+    "shadows": [
+      {
+        "name": "role-selected",
+        "value": "0 2px 4px #2038200b",
+        "purpose": "Selected demo role."
+      },
+      {
+        "name": "toast",
+        "value": "0 8px 25px #253d2429",
+        "purpose": "Transient status feedback."
+      },
+      {
+        "name": "input-focus",
+        "value": "0 0 0 3px #e1ecdc",
+        "purpose": "Focused form control."
+      }
+    ],
+    "motion": [
+      {
+        "name": "control-transition",
+        "value": ".18s ease",
+        "purpose": "Button, card and field state transitions."
+      },
+      {
+        "name": "score-transition",
+        "value": ".45s cubic-bezier(.16,1,.3,1)",
+        "purpose": "Server rating bar updates."
+      },
+      {
+        "name": "drawer-transition",
+        "value": ".2s ease-out",
+        "purpose": "Mobile sidebar movement."
+      },
+      {
+        "name": "skeleton",
+        "value": "1.6s ease-in-out infinite",
+        "purpose": "Loading pulse; disabled with reduced motion."
+      },
+      {
+        "name": "toast-entry",
+        "value": ".28s cubic-bezier(.16,1,.3,1)",
+        "purpose": "Toast entry; disabled with reduced motion."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "wide-min",
+        "value": "1600px"
+      },
+      {
+        "name": "compact-max",
+        "value": "1190px"
+      },
+      {
+        "name": "tablet-max",
+        "value": "960px"
+      },
+      {
+        "name": "drawer-max",
+        "value": "760px"
+      },
+      {
+        "name": "stack-max",
+        "value": "580px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Explicit action with the shipped hover, focus and disabled states.",
+      "html": "<button class=\"ds-button-primary\" type=\"button\">Сохранить</button>",
+      "css": ".ds-button-primary{font-family:'Manrope Variable',Manrope,sans-serif;display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:43px;padding:11px 17px;font-size:12px;font-weight:650;line-height:1.5;border-radius:8px;border:1px solid transparent;cursor:pointer;transition:background .18s,border-color .18s,color .18s;background:var(--brand,#235c48);color:#fff;}.ds-button-primary:hover:not(:disabled){background:var(--brand-hover,#174333);}.ds-button-primary:focus-visible{outline:3px solid var(--focus,#467958);outline-offset:4px;}.ds-button-primary:disabled{opacity:.48;cursor:not-allowed;}@media(prefers-reduced-motion:reduce){.ds-button-primary{transition:none;}}"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Explicit action with the shipped hover, focus and disabled states.",
+      "html": "<button class=\"ds-button-secondary\" type=\"button\">Отмена</button>",
+      "css": ".ds-button-secondary{font-family:'Manrope Variable',Manrope,sans-serif;display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:43px;padding:11px 17px;font-size:12px;font-weight:650;line-height:1.5;border-radius:8px;border:1px solid transparent;cursor:pointer;transition:background .18s,border-color .18s,color .18s;background:#fff;color:var(--ink,#25372f);border-color:#dce2d8;}.ds-button-secondary:hover:not(:disabled){background:#eef3e9;border-color:#b8c7b2;}.ds-button-secondary:focus-visible{outline:3px solid var(--focus,#467958);outline-offset:4px;}.ds-button-secondary:disabled{opacity:.48;cursor:not-allowed;}@media(prefers-reduced-motion:reduce){.ds-button-secondary{transition:none;}}"
+    },
+    {
+      "name": "Light Button",
+      "kind": "button",
+      "refersTo": "button-light",
+      "description": "Explicit action with the shipped hover, focus and disabled states.",
+      "html": "<button class=\"ds-button-light\" type=\"button\">Создать задачу</button>",
+      "css": ".ds-button-light{font-family:'Manrope Variable',Manrope,sans-serif;display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:43px;padding:11px 17px;font-size:12px;font-weight:650;line-height:1.5;border-radius:8px;border:1px solid transparent;cursor:pointer;transition:background .18s,border-color .18s,color .18s;background:#e2f0bb;color:#254432;}.ds-button-light:hover:not(:disabled){background:#f1fadf;}.ds-button-light:focus-visible{outline:3px solid var(--focus,#467958);outline-offset:4px;}.ds-button-light:disabled{opacity:.48;cursor:not-allowed;}@media(prefers-reduced-motion:reduce){.ds-button-light{transition:none;}}"
+    },
+    {
+      "name": "Danger Button",
+      "kind": "button",
+      "refersTo": "button-danger",
+      "description": "Explicit action with the shipped hover, focus and disabled states.",
+      "html": "<button class=\"ds-button-danger\" type=\"button\">Да, отклонить</button>",
+      "css": ".ds-button-danger{font-family:'Manrope Variable',Manrope,sans-serif;display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:43px;padding:11px 17px;font-size:12px;font-weight:650;line-height:1.5;border-radius:8px;border:1px solid transparent;cursor:pointer;transition:background .18s,border-color .18s,color .18s;background:#a24039;color:#fff;}.ds-button-danger:hover:not(:disabled){background:#7d2c27;}.ds-button-danger:focus-visible{outline:3px solid var(--focus,#467958);outline-offset:4px;}.ds-button-danger:disabled{opacity:.48;cursor:not-allowed;}@media(prefers-reduced-motion:reduce){.ds-button-danger{transition:none;}}"
+    },
+    {
+      "name": "Text Field",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Visible label and focus ring for editable task content.",
+      "html": "<label class=\"ds-label\" for=\"ds-task-title\">Название задачи</label><input class=\"ds-input\" id=\"ds-task-title\" placeholder=\"Коротко опишите задачу\" />",
+      "css": ".ds-label{font-family:'Manrope Variable',Manrope,sans-serif;display:block;font-size:11px;font-weight:700;margin-bottom:9px;color:var(--ink,#25372f);}.ds-input{font-family:'Manrope Variable',Manrope,sans-serif;width:100%;min-height:46px;border:1px solid #dce3da;border-radius:8px;background:#fff;color:var(--ink,#25372f);padding:12px 14px;font-size:12px;transition:border-color .18s,box-shadow .18s;caret-color:var(--brand,#235c48);}.ds-input::placeholder{color:var(--muted,#5d6b60);opacity:1;}.ds-input:focus,.ds-input:focus-visible{border-color:var(--brand,#235c48);box-shadow:0 0 0 3px #e1ecdc;outline:none;}@media(prefers-reduced-motion:reduce){.ds-input{transition:none;}}"
+    },
+    {
+      "name": "Sidebar Navigation",
+      "kind": "nav",
+      "refersTo": "navigation",
+      "description": "Active navigation combines stronger type and a green-tinted surface.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Основная навигация\"><a class=\"ds-nav-link ds-active\" aria-current=\"page\" href=\"#overview\">Обзор</a><a class=\"ds-nav-link\" href=\"#catalog\">Каталог задач</a></nav>",
+      "css": ".ds-nav{display:grid;gap:6px;}.ds-nav-link{font-family:'Manrope Variable',Manrope,sans-serif;display:flex;align-items:center;gap:12px;padding:12px 14px;min-height:46px;border-radius:8px;color:#65716a;font-weight:550;font-size:12px;text-decoration:none;}.ds-nav-link:hover{background:#f6f8f3;color:var(--brand,#235c48);}.ds-nav-link.ds-active{color:var(--brand,#235c48);background:#eaf1e7;font-weight:750;}.ds-nav-link:focus-visible{outline:3px solid var(--focus,#467958);outline-offset:4px;}"
+    },
+    {
+      "name": "Readiness Badges",
+      "kind": "chip",
+      "refersTo": "badge",
+      "description": "Text-labeled readiness states; proposal status uses the same geometry.",
+      "html": "<span class=\"ds-badge ds-ready\">Готова к работе</span> <span class=\"ds-badge ds-workable\">Можно уточнить</span> <span class=\"ds-badge ds-draft\">Черновик</span>",
+      "css": ".ds-badge{font-family:'Manrope Variable',Manrope,sans-serif;display:inline-flex;align-items:center;gap:5px;padding:4px 7px;border-radius:5px;font-size:9px;font-weight:650;line-height:1.4;white-space:nowrap;background:#eef2e9;color:#5c6b50;}.ds-ready{background:#e9f1eb;color:#346449;}.ds-workable{background:#f6efd9;color:#80652c;}.ds-draft{background:#f0f0ed;color:#69706a;}"
+    },
+    {
+      "name": "Task Card",
+      "kind": "card",
+      "refersTo": "task-card",
+      "description": "Full-card link: content preview, labeled score and progress. Sample data is illustrative.",
+      "html": "<a class=\"ds-card\" href=\"#task\"><span class=\"ds-topic\">Аналитика</span><h3 class=\"ds-card-title\">Понятный отчёт по продажам</h3><p class=\"ds-excerpt\">Собрать данные в удобный отчёт для команды.</p><div class=\"ds-card-score\"><span>Готова к работе</span><strong>72 / 100</strong></div><div class=\"ds-track\" role=\"progressbar\" aria-label=\"Готовность задачи\" aria-valuenow=\"72\" aria-valuemin=\"0\" aria-valuemax=\"100\"><span class=\"ds-fill\"></span></div></a>",
+      "css": ".ds-card{font-family:'Manrope Variable',Manrope,sans-serif;display:flex;flex-direction:column;padding:22px;border:1px solid var(--line,#e3e8e1);background:#fff;border-radius:var(--radius,14px);color:var(--ink,#25372f);text-decoration:none;transition:border-color .18s,background .18s;}.ds-card:hover{border-color:#a2b695;background:#fdfefb;}.ds-card:focus-visible{outline:3px solid var(--focus,#467958);outline-offset:4px;}.ds-topic{font-size:10px;font-weight:600;color:#65775b;margin-bottom:22px;}.ds-card-title{margin:0;font-size:16px;font-weight:650;line-height:1.45;letter-spacing:-.02em;}.ds-excerpt{font-size:11px;line-height:1.8;margin:12px 0 0;color:var(--muted,#5d6b60);}.ds-card-score{display:flex;justify-content:space-between;gap:8px;font-size:10px;margin:26px 0 11px;}.ds-card-score strong{font-size:15px;font-weight:750;font-variant-numeric:tabular-nums;}.ds-track{height:4px;border-radius:4px;background:#edf0e8;overflow:hidden;}.ds-fill{display:block;width:72%;height:100%;background:#769a59;border-radius:inherit;}@media(prefers-reduced-motion:reduce){.ds-card{transition:none;}}"
+    },
+    {
+      "name": "Rating Panel",
+      "kind": "custom",
+      "refersTo": "rating",
+      "description": "Server-driven rating presentation with a save reminder when dirty. Sample score is illustrative.",
+      "html": "<aside class=\"ds-rating\"><h2 class=\"ds-rating-title\">Готовность задачи</h2><strong class=\"ds-total\">72<span> / 100</span></strong><div class=\"ds-rating-track\" role=\"progressbar\" aria-label=\"Общий рейтинг\" aria-valuenow=\"72\" aria-valuemin=\"0\" aria-valuemax=\"100\"><span class=\"ds-rating-fill\"></span></div><p class=\"ds-rating-copy\">Сохраните изменения, чтобы обновить рейтинг.</p><p class=\"ds-rating-footnote\">Любую задачу можно опубликовать — даже с небольшим рейтингом.</p></aside>",
+      "css": ".ds-rating{font-family:'Manrope Variable',Manrope,sans-serif;background:#fff;border:1px solid var(--line,#e3e8e1);border-radius:var(--radius,14px);padding:23px;color:var(--ink,#25372f);}.ds-rating-title{margin:0;font-size:13px;font-weight:650;line-height:1.28;letter-spacing:-.025em;}.ds-total{display:block;margin:20px 0 15px;font-weight:600;font-size:43px;line-height:1.15;letter-spacing:-.035em;font-variant-numeric:tabular-nums;}.ds-total span{font-size:14px;font-weight:500;letter-spacing:0;color:var(--muted,#5d6b60);}.ds-rating-track{height:7px;background:#edf0e8;border-radius:4px;overflow:hidden;}.ds-rating-fill{display:block;width:100%;height:100%;background:#769a59;transform:scaleX(.72);transform-origin:left;transition:transform .45s cubic-bezier(.16,1,.3,1);}.ds-rating-copy{font-size:10px;line-height:1.8;margin:12px 0 0;color:var(--muted,#5d6b60);}.ds-rating-footnote{font-size:9px;line-height:1.8;padding-top:15px;margin:17px 0 0;border-top:1px solid var(--line,#e3e8e1);color:var(--muted,#5d6b60);}@media(prefers-reduced-motion:reduce){.ds-rating-fill{transition:none;}}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Shared project studio",
+    "overview": "White work surfaces, a grey-green canvas, forest actions and restrained lime accents make a practical workspace for business representatives and student teams. Typography, borders and spacing carry the hierarchy; icons support actions and no raster imagery ships.\n\nThis is a descriptive record of the implemented MVP, based on `frontend/src/styles.css`, shared components and pages. The studio metaphor, Russian copy and name «Практика» are working assumptions from the direction contract, not an approved standing identity.",
+    "keyCharacteristics": [
+      "Quiet, bordered work surfaces.",
+      "One Manrope family with clear numerical hierarchy.",
+      "Explicit save, confirmation and publication states.",
+      "Scores explain readiness without restricting participation."
+    ],
+    "rules": [],
+    "dos": [
+      "Do use labels and numeric values alongside state colors and bars.",
+      "Do preserve the visible distinction between unsaved, saved, confirmed and published work.",
+      "Do keep full explanations on detail surfaces when catalog previews are clamped.",
+      "Do retain keyboard focus treatment and reduced-motion behavior."
+    ],
+    "donts": [
+      "Don't present the demo role switch as authentication or local task history as ownership.",
+      "Don't turn a low readiness score into a publishing or proposal restriction.",
+      "Don't replace API loading or error states with invented activity.",
+      "Don't treat the working name or studio metaphor as user-approved standing branding."
+    ]
+  }
+}
