@@ -5,6 +5,5 @@ declare namespace Cloudflare {
     OPENAI_API_KEY?: string;
     OPENAI_MODEL?: string;
     APP_ACCOUNTS?: string;
-    TASK_OWNER_TRANSFERS?: string;
   }
 }
