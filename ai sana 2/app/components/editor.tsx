@@ -18,6 +18,7 @@ import { taskPayloadSchema, type TaskPayload } from "@/lib/task-payload";
 import type { TaskRecord } from "@/lib/types";
 import type { AssistantResult } from "@/lib/assistant";
 import { requestJson } from "@/lib/client";
+import { mergeAssistantDraft } from "@/lib/merge-assistant";
 
 const steps = ["Суть задачи", "Ожидаемый результат", "Условия и публикация"];
 const required = new Set(["title", "summary", "problem", "goal"]);
@@ -59,6 +60,8 @@ export function Editor({
   const [notice, setNotice] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const quality = useMemo(() => evaluateTaskQuality(form), [form]);
+  const [beforeAI, setBeforeAI] = useState<ReturnType<typeof evaluateTaskQuality> | null>(null);
+  const previewQuality = ai ? evaluateTaskQuality(mergeAssistantDraft(form, ai.task)) : null;
   const dirty = JSON.stringify(form) !== saved;
   useEffect(() => {
     onDirty(dirty || !!description.trim() || aiBusy || !!busy);
@@ -156,15 +159,9 @@ export function Editor({
   }
   function applyAI() {
     if (!ai) return;
-    const merged = { ...form };
-    for (const key of Object.keys(emptyTask) as (keyof TaskPayload)[]) {
-      if (key === "skills") {
-        if (!form.skills.length) {
-          merged.skills = ai.task.skills;
-          setSkills(ai.task.skills.join(", "));
-        }
-      } else if (!form[key].trim()) merged[key] = ai.task[key];
-    }
+    const merged = mergeAssistantDraft(form, ai.task);
+    setBeforeAI(evaluateTaskQuality(form));
+    setSkills(merged.skills.join(", "));
     setForm(merged);
     setDescription("");
     setQuestions(ai.questions);
@@ -324,6 +321,7 @@ export function Editor({
                     </button>
                   </div>
                   <p>{ai.note}</p>
+                  {previewQuality && <p className="ai-score-preview">Качество карточки после заполнения пустых полей: <strong>{quality.score} → {previewQuality.score} / 100</strong>. Проверьте предложенные сведения.</p>}
                   <dl>
                     {fieldDefinitions
                       .filter((field) => ai.task[field.key])
@@ -526,6 +524,12 @@ export function Editor({
             <span style={{ transform: `scaleX(${quality.score / 100})` }} />
           </div>
           <h2>{qualityLevels[quality.level].label}</h2>
+          {beforeAI && <section className="quality-change" aria-label="Изменение качества брифа" aria-live="polite">
+            <h3>Что улучшилось</h3>
+            <p>До помощи ИИ <strong>{beforeAI.score}</strong> → сейчас <strong>{quality.score}</strong></p>
+            <ul>{quality.criteria.filter(item => item.earned > (beforeAI.criteria.find(old => old.key === item.key)?.earned ?? 0)).map(item => <li key={item.key}><span>{item.label}</span><b>+{item.earned - (beforeAI.criteria.find(old => old.key === item.key)?.earned ?? 0)}</b></li>)}</ul>
+            <small>Баллы рассчитаны по заполненным полям. Факты и условия подтверждает бизнес.</small>
+          </section>}
           <p>
             {quality.score === 100
               ? "Все разделы описаны. Проверьте факты — и можно публиковать."

@@ -2083,6 +2083,15 @@ input::placeholder, textarea::placeholder { color: #687762; opacity: 1; }
   .login-roles, .login-intro > p { display: none; }
   .login-brand { margin-bottom: 20px; }
 }
+.ai-score-preview { margin-block: 16px; padding: 16px; background: var(--soft); color: var(--ink); border-radius: var(--radius); }
+.ai-score-preview strong { font-variant-numeric: tabular-nums; }
+.quality-change { margin-block: 24px; padding-block: 20px; border-block: 1px solid var(--line); }
+.quality-change h3 { margin: 0 0 12px; }
+.quality-change p { color: var(--ink); }
+.quality-change ul { list-style: none; padding: 0; margin: 14px 0; }
+.quality-change li { display: flex; justify-content: space-between; gap: 12px; padding-block: 4px; font-size: 14px; }
+.quality-change b { font-variant-numeric: tabular-nums; }
+.quality-change small { display: block; color: var(--muted); font-size: 14px; }
 @media (max-width: 580px) {
   .login-page { padding: 24px 16px 40px; }
   .login-panel { padding: 26px 20px; }

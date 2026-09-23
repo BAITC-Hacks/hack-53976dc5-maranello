@@ -53,7 +53,7 @@ export function TaskDetail({
   useEffect(() => {
     if (!signedIn || isExample) return;
     let cancelled = false;
-    requestJson<{ responses: TeamResponse[] }>(
+    function updateResponses() { return requestJson<{ responses: TeamResponse[] }>(
       `/api/tasks/${task.id}/responses`,
     )
       .then((data) => {
@@ -64,9 +64,17 @@ export function TaskDetail({
       })
       .finally(() => {
         if (!cancelled) setLoading(false);
-      });
+      }); }
+    void updateResponses();
+    function onFocus() { if (document.visibilityState === "visible") void updateResponses(); }
+    window.addEventListener("focus", onFocus);
+    document.addEventListener("visibilitychange", onFocus);
+    const timer = window.setInterval(onFocus, 15000);
     return () => {
       cancelled = true;
+      window.removeEventListener("focus", onFocus);
+      document.removeEventListener("visibilitychange", onFocus);
+      window.clearInterval(timer);
     };
   }, [task.id, task.selectedResponseId, signedIn, isExample]);
   async function submit(event: React.FormEvent) {
@@ -321,7 +329,7 @@ export function TaskDetail({
               )}
             </>
           ) : !canRespond ? (
-            <><h2>Отклики — от студентов</h2><p>Вы вошли как бизнес. Чтобы предложить решение этой задачи, смените аккаунт на студенческий.</p><a className="secondary full" href={signInHref}>Войти как студент</a></>
+            <><h2>Задача другого владельца</h2><p>Владелец: {task.ownerName}. Команды и их предложения видны только аккаунту, который создал эту задачу.</p><p>Ваши задачи и отклики на них находятся в разделе «Мои задачи».</p><a className="secondary full" href="/?view=mine">Мои задачи</a></>
           ) : (
             <>
               <div className="panel-icon">
