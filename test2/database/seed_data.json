@@ -1,0 +1,105 @@
+[
+  {
+    "description": "[DEMO] Анализ продаж небольшой пекарни",
+    "topic": "аналитика",
+    "status": "published",
+    "card": {
+      "title": "Дашборд продаж пекарни",
+      "context": "Пекарня ведёт ежедневный учёт продаж в таблицах.",
+      "need": "Быстро находить популярные товары и часы низкого спроса.",
+      "users": "Владелец и управляющий пекарни.",
+      "data_materials": "Обезличенный CSV продаж за три месяца, описание колонок.",
+      "constraints": "Прототип за пять часов, без внешних платных сервисов.",
+      "expected_result": "Дашборд с фильтрами по дате и товару.",
+      "success_criteria": "Итоги совпадают с CSV; видны топ-5 товаров и продажи по часам.",
+      "contact": "bakery@example.com",
+      "interaction_format": "Короткая встреча в начале и демонстрация в конце."
+    },
+    "proposals": [
+      {"team_name": "Data Bakers", "contact": "bakers@example.com", "solution_idea": "Дашборд продаж", "plan": "Проверить CSV, построить графики, сверить суммы.", "estimated_duration": "5 часов", "prototype_url": "https://example.com/bakers", "status": "pending"},
+      {"team_name": "Charts Lab", "contact": "charts@example.com", "solution_idea": "Статический отчёт", "plan": "Проверить данные и подготовить PDF.", "estimated_duration": "4 часа", "prototype_url": "", "status": "rejected"}
+    ]
+  },
+  {
+    "description": "[DEMO] Учёт заявок волонтёров",
+    "topic": "автоматизация",
+    "status": "published",
+    "card": {
+      "title": "Реестр волонтёрских заявок",
+      "context": "Заявки поступают в разные чаты.",
+      "need": "Собирать заявки в одном месте.",
+      "expected_result": "Простой реестр с поиском.",
+      "users": "Координаторы волонтёров."
+    },
+    "proposals": [
+      {"team_name": "Campus Team", "contact": "campus@example.com", "solution_idea": "Реестр с ручным вводом и поиском", "plan": "Определить поля, реализовать форму и поиск.", "estimated_duration": "5 часов", "prototype_url": "", "status": "accepted"}
+    ]
+  },
+  {
+    "description": "[DEMO] Идея программы лояльности",
+    "topic": "маркетинг",
+    "status": "published",
+    "card": {"title": "Помочь с программой лояльности", "context": "Магазин хочет чаще видеть постоянных покупателей."},
+    "proposals": [
+      {"team_name": "Discovery Team", "contact": "discovery@example.com", "solution_idea": "Исследование потребностей", "plan": "Провести интервью и согласовать критерии результата.", "estimated_duration": "2 часа", "prototype_url": "", "status": "pending"}
+    ]
+  },
+  {
+    "description": "[DEMO] Проверка складских остатков",
+    "topic": "аналитика",
+    "status": "confirmed",
+    "card": {
+      "title": "Отчёт об остатках",
+      "context": "Склад ежедневно выгружает остатки в CSV.",
+      "need": "Выявлять товары с низким запасом.",
+      "data_materials": "CSV с остатками и порогами.",
+      "expected_result": "Отчёт по товарам ниже порога.",
+      "success_criteria": "Каждая строка ниже порога попадает в отчёт."
+    }
+  },
+  {
+    "description": "[DEMO] Автоматизация расписания занятий",
+    "topic": "образование",
+    "status": "draft",
+    "card": {"context": "Учебный центр хочет упростить составление расписания."}
+  },
+  {
+    "description": "[DEMO v2] Сравнение посещаемости мастер-классов",
+    "topic": "аналитика",
+    "status": "published",
+    "card": {
+      "title": "Отчёт о посещаемости",
+      "context": "Учебный центр проводит мастер-классы.",
+      "need": "Сравнивать посещаемость по дням.",
+      "data_materials": "CSV с обезличенной посещаемостью.",
+      "expected_result": "Таблица и диаграмма по дням.",
+      "success_criteria": "Суммы на диаграмме совпадают с CSV."
+    },
+    "proposals": [
+      {"team_name": "Attendance Lab", "contact": "attendance@example.com", "solution_idea": "Отчёт из CSV", "plan": "Проверить колонки, посчитать итоги и построить диаграмму.", "estimated_duration": "3 часа", "prototype_url": "https://example.com/attendance", "status": "pending"}
+    ]
+  },
+  {
+    "description": "[DEMO v2] Реестр оборудования учебной лаборатории",
+    "topic": "автоматизация",
+    "status": "published",
+    "card": {
+      "title": "Реестр оборудования",
+      "context": "Лаборатория выдаёт оборудование студентам.",
+      "need": "Видеть свободное и выданное оборудование.",
+      "users": "Лаборанты и преподаватели.",
+      "data_materials": "Обезличенная таблица с инвентарными номерами.",
+      "constraints": "Локальное приложение, прототип за пять часов.",
+      "expected_result": "Реестр с поиском и статусом выдачи.",
+      "success_criteria": "Каждый номер из таблицы найден, выдача меняет статус.",
+      "contact": "lab@example.com",
+      "interaction_format": "Встреча на старте и демонстрация в конце."
+    }
+  },
+  {
+    "description": "[DEMO v2] Тема пока не определена",
+    "topic": "образование",
+    "status": "draft",
+    "card": {"context": "не знаю", "need": "TBD", "success_criteria": "???"}
+  }
+]
